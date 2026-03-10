@@ -32,7 +32,7 @@ export class AuthService {
 
   logout(): void {
     this.http
-      .post(`${environment.apiUrl}/auth/logout`, {}, { withCredentials: true })
+      .post(`${environment.apiUrl}/auth/seguridad/logout`, {}, { withCredentials: true })
       .subscribe({ complete: () => this._clearSession() });
   }
 

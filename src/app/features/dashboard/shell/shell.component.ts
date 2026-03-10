@@ -3,6 +3,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { DrawerModule } from 'primeng/drawer';
 import { AuthService } from '../../auth/services/auth.service';
+import { ApiKeyService } from '../../../features/seguridad/services/api-key.service';
 
 interface NavChild {
   label: string;
@@ -31,6 +32,7 @@ export function isNavGroup(item: NavItem): item is NavGroup {
 })
 export class ShellComponent {
   private readonly authService = inject(AuthService);
+  private readonly apiKeyService = inject(ApiKeyService);
 
   readonly currentUser = this.authService.currentUser;
   readonly drawerVisible = signal(false);
@@ -67,6 +69,7 @@ export class ShellComponent {
   }
 
   logout(): void {
+    this.apiKeyService.clearCache();
     this.authService.logout();
   }
 }

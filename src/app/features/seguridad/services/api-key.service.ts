@@ -13,6 +13,10 @@ export class ApiKeyService {
   private readonly _apiKeys = signal<ApiKey[]>([]);
   readonly apiKeys = this._apiKeys.asReadonly();
 
+  clearCache(): void {
+    this._apiKeys.set([]);
+  }
+
   getApiKeys(): Observable<ApiKey[]> {
     const tenantId = this.authService.currentUser()?.tenant_id;
     return this.http
