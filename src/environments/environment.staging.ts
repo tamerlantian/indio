@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://semanticaapi.com.co',
+  apiUrl: 'https://api.semanticaapi.com.co',
 };
