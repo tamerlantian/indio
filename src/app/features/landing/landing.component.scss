@@ -1,28 +1,12 @@
-// ─── Design Tokens ──────────────────────────────────────────────────────────
+// ─── Base ────────────────────────────────────────────────────────────────────
 :host {
-  --l-bg:           #f8fafc;
-  --l-surface:      #ffffff;
-  --l-surface-2:    #f1f5f9;
-  --l-border:       rgba(0 0 0 / 0.08);
-  --l-border-hover: rgba(0 0 0 / 0.14);
-  --l-accent:       #059669;
-  --l-accent-dim:   rgba(5 150 105 / 0.08);
-  --l-accent-glow:  rgba(5 150 105 / 0.20);
-  --l-blue:         #2563eb;
-  --l-blue-dim:     rgba(37 99 235 / 0.08);
-  --l-blue-glow:    rgba(37 99 235 / 0.20);
-  --l-text:         #0f172a;
-  --l-muted:        #64748b;
-  --l-muted-2:      #94a3b8;
-
   display: block;
   font-family: 'Geist', system-ui, sans-serif;
 }
 
-// ─── Base ────────────────────────────────────────────────────────────────────
 .landing {
-  background: var(--l-bg);
-  color: var(--l-text);
+  background: var(--brand-bg);
+  color: var(--brand-text);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -51,13 +35,13 @@
   &:hover .pi { transform: translateX(3px); }
 
   &--primary {
-    background: var(--l-accent);
+    background: var(--brand-navy);
     color: #ffffff;
-    box-shadow: 0 0 24px var(--l-accent-glow);
+    box-shadow: 0 0 24px var(--brand-navy-glow);
 
     &:hover {
       filter: brightness(1.1);
-      box-shadow: 0 0 40px var(--l-accent-glow);
+      box-shadow: 0 0 40px var(--brand-navy-glow);
       transform: translateY(-1px);
     }
 
@@ -66,13 +50,13 @@
 
   &--ghost {
     background: transparent;
-    color: var(--l-blue);
-    border: 1.5px solid rgba(59 130 246 / 0.30);
+    color: var(--brand-navy);
+    border: 1.5px solid rgba(20 48 73 / 0.25);
 
     &:hover {
-      background: var(--l-blue-dim);
-      border-color: var(--l-blue);
-      box-shadow: 0 0 24px var(--l-blue-glow);
+      background: var(--brand-navy-dim);
+      border-color: var(--brand-navy);
+      box-shadow: 0 0 24px var(--brand-navy-glow);
       transform: translateY(-1px);
     }
 
@@ -90,7 +74,7 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   background: rgba(248 250 252 / 0.90);
-  border-bottom: 1px solid var(--l-border);
+  border-bottom: 1px solid var(--brand-border);
 
   &__inner {
     max-width: 1100px;
@@ -110,12 +94,12 @@
   &__logo-mark {
     width: 34px;
     height: 34px;
-    background: var(--l-accent);
+    background: var(--brand-navy);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 16px var(--l-accent-glow);
+    box-shadow: 0 0 16px var(--brand-navy-glow);
 
     span {
       font-size: 1rem;
@@ -134,14 +118,14 @@
   &__logo-name {
     font-size: 0.95rem;
     font-weight: 700;
-    color: var(--l-text);
+    color: var(--brand-text);
     letter-spacing: -0.02em;
   }
 
   &__logo-tag {
     font-size: 0.6rem;
     font-weight: 600;
-    color: var(--l-accent);
+    color: var(--brand-blue);
     letter-spacing: 0.14em;
     text-transform: uppercase;
   }
@@ -155,14 +139,14 @@
   &__link {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--l-muted);
+    color: var(--brand-muted);
     text-decoration: none;
     padding: 0.5rem 0.875rem;
     border-radius: 8px;
     transition: all 0.18s ease;
 
     &:hover {
-      color: var(--l-text);
+      color: var(--brand-text);
       background: rgba(255 255 255 / 0.05);
     }
   }
@@ -193,20 +177,20 @@
     &--1 {
       width: 500px;
       height: 500px;
-      background: radial-gradient(circle, var(--l-accent), transparent 70%);
+      background: radial-gradient(circle, var(--brand-navy), transparent 70%);
       top: -180px;
       left: -150px;
-      opacity: 0.12;
+      opacity: 0.10;
       animation: drift1 20s ease-in-out infinite alternate;
     }
 
     &--2 {
       width: 450px;
       height: 450px;
-      background: radial-gradient(circle, var(--l-blue), transparent 70%);
+      background: radial-gradient(circle, var(--brand-blue), transparent 70%);
       bottom: -120px;
       right: -120px;
-      opacity: 0.12;
+      opacity: 0.18;
       animation: drift2 24s ease-in-out infinite alternate;
     }
   }
@@ -238,7 +222,7 @@
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--l-muted-2);
+    color: var(--brand-muted-2);
   }
 }
 
@@ -248,8 +232,8 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   gap: 0;
-  background: var(--l-surface);
-  border: 1px solid var(--l-border);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
   border-radius: 20px;
   overflow: hidden;
   box-shadow:
@@ -263,7 +247,7 @@
 
 .divider {
   width: 1px;
-  background: var(--l-border);
+  background: var(--brand-border);
   margin: 2.5rem 0;
 
   @media (max-width: 700px) {
@@ -282,14 +266,14 @@
   transition: background 0.2s ease;
 
   &:hover {
-    background: var(--l-surface-2);
+    background: var(--brand-surface-2);
   }
 
   &__icon {
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    background: var(--l-accent-dim);
+    background: var(--brand-navy-dim);
     border: 1px solid rgba(16 185 129 / 0.20);
     display: flex;
     align-items: center;
@@ -299,14 +283,14 @@
 
     .pi {
       font-size: 1.25rem;
-      color: var(--l-accent);
+      color: var(--brand-navy);
     }
 
     &--blue {
-      background: var(--l-blue-dim);
-      border-color: rgba(59 130 246 / 0.20);
+      background: var(--brand-blue-dim);
+      border-color: rgba(119 170 215 / 0.30);
 
-      .pi { color: var(--l-blue); }
+      .pi { color: var(--brand-blue); }
     }
   }
 
@@ -319,7 +303,7 @@
     font-size: 1.3rem;
     font-weight: 700;
     letter-spacing: -0.03em;
-    color: var(--l-text);
+    color: var(--brand-text);
     margin: 0 0 0.75rem;
     line-height: 1.2;
   }
@@ -327,7 +311,7 @@
   &__desc {
     font-size: 0.9rem;
     line-height: 1.7;
-    color: var(--l-muted);
+    color: var(--brand-muted);
     margin: 0;
     max-width: 300px;
   }
@@ -335,7 +319,7 @@
 
 // ─── Footer ──────────────────────────────────────────────────────────────────
 .footer {
-  border-top: 1px solid var(--l-border);
+  border-top: 1px solid var(--brand-border);
 
   &__inner {
     max-width: 1100px;
@@ -347,7 +331,7 @@
 
   &__copy {
     font-size: 0.78rem;
-    color: var(--l-muted-2);
+    color: var(--brand-muted-2);
   }
 }
 

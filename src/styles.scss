@@ -18,6 +18,28 @@
 
 :root {
   --p-font-family: 'Geist', system-ui, sans-serif;
+
+  // Brand palette
+  --brand-navy: #143049;
+  --brand-navy-deep: #0d2035;
+  --brand-blue: #77aad7;
+  --brand-white: #ffffff;
+
+  // Semantic
+  --brand-bg: #f4f7fb;
+  --brand-surface: #ffffff;
+  --brand-surface-2: #eaf0f7;
+  --brand-text: #143049;
+  --brand-muted: #4a6a85;
+  --brand-muted-2: #8aafc9;
+  --brand-border: rgba(20 48 73 / 0.10);
+  --brand-border-hover: rgba(20 48 73 / 0.20);
+
+  // Glow / dim variants
+  --brand-navy-dim: rgba(20 48 73 / 0.07);
+  --brand-navy-glow: rgba(20 48 73 / 0.18);
+  --brand-blue-dim: rgba(119 170 215 / 0.12);
+  --brand-blue-glow: rgba(119 170 215 / 0.30);
 }
 
 *,
