@@ -7,14 +7,14 @@ Portal de autogestión para empleados. Permite consultar y gestionar informació
 | Tecnología | Versión |
 |---|---|
 | Angular | 20 (standalone components, signals) |
-| PrimeNG | 20.4.0 (tema Aura) |
+| PrimeNG | 20.4.0 (tema Aura con preset personalizado) |
 | Fuente | Geist |
 
 ## Requisitos
 
 - Node.js 20+
 - Angular CLI 20
-- Backend corriendo en `http://localhost:3000/api`
+- Backend en `https://semanticaapi.com.co` (proxied en dev como `/api`)
 
 ## Comandos
 
@@ -29,62 +29,50 @@ ng test --include="**/foo.spec.ts"         # Ejecutar un test específico
 
 ```
 src/app/
-├── app.config.ts            # Providers globales (router, HTTP, PrimeNG)
-├── app.routes.ts            # Rutas raíz
+├── app.config.ts            # Providers globales (router, HTTP, PrimeNG, app initializer)
+├── app.routes.ts            # Rutas raíz con lazy loading
 ├── core/
-│   ├── guards/
-│   │   ├── auth.guard.ts        # Redirige a /auth/login si no autenticado
-│   │   └── public.guard.ts      # Redirige a /dashboard si ya autenticado
 │   └── interceptors/
 │       └── auth.interceptor.ts  # Agrega withCredentials a todas las peticiones
 └── features/
     ├── landing/             # Página de inicio pública
     ├── auth/
     │   ├── login/           # Formulario de inicio de sesión
-    │   ├── guards/          # Guards de autenticación
+    │   ├── guards/          # authGuard y publicGuard
     │   ├── services/        # AuthService (signals, HTTP-only cookies)
     │   └── models/          # LoginRequest, AuthResponse, Usuario
-    └── dashboard/
-        ├── shell/           # Layout: navbar + sidebar + router-outlet
-        ├── inicio/          # Página de bienvenida
-        ├── pagos/
-        ├── reclamos/
-        ├── solicitudes/
-        ├── capacitaciones/
-        ├── certificado-laboral/
-        ├── certificado-laboral-historico/
-        ├── autorizacion-arma/
-        ├── seguridad-social/
-        └── turnos/
+    ├── dashboard/
+    │   └── shell/           # Layout: navbar + sidebar + router-outlet
+    └── seguridad/
+        ├── api-keys/        # Gestión de API Keys
+        ├── services/        # ApiKeyService
+        └── models/          # ApiKey model
 ```
 
 ## Rutas
 
 ```
-/                             → Landing (redirige a /auth/login si no autenticado)
-/auth/login                   → Login
-/dashboard/inicio             → Inicio  (requiere autenticación)
-/dashboard/pagos              → Pagos
-/dashboard/reclamos           → Reclamos
-/dashboard/solicitudes        → Solicitudes
-/dashboard/capacitaciones     → Capacitaciones
-/dashboard/certificado-laboral           → Certificado Laboral
-/dashboard/certificado-laboral-historico → Cert. Laboral Histórico
-/dashboard/autorizacion-arma  → Autorización de Arma
-/dashboard/seguridad-social   → Seguridad Social
-/dashboard/turnos             → Turnos
+/                             → Landing (redirige a /dashboard si autenticado)
+/auth/login                   → Inicio de sesión
+/dashboard                    → Dashboard (requiere autenticación)
+/seguridad/api-keys           → Gestión de API Keys (requiere autenticación)
 ```
 
-Todas las rutas bajo `/dashboard` están protegidas por `authGuard`. Todas las rutas de `/auth` están protegidas por `publicGuard`.
+Rutas planificadas bajo `/dashboard`: pagos, reclamos, solicitudes, capacitaciones, certificado-laboral, certificado-laboral-historico, autorizacion-arma, seguridad-social, turnos.
+
+Todas las rutas protegidas usan `authGuard`. Las rutas de `/auth` usan `publicGuard`.
 
 ## Autenticación
 
-La autenticación se maneja mediante **HTTP-only cookies** gestionadas por el backend. El `AuthService` mantiene el estado del usuario en un signal (`currentUser`) y expone `isAuthenticated` como computed signal. No se almacena ningún token en `localStorage`.
+La autenticación se maneja con **HTTP-only cookies** gestionadas por el backend. El `AuthService` mantiene el estado en un signal (`currentUser`) y expone `isAuthenticated` como computed signal. No se almacena ningún token en `localStorage`.
+
+Al arrancar la app, un `provideAppInitializer` llama a `POST /auth/seguridad/refresh` para rehidratar la sesión desde la cookie vigente. Esto evita el flash de redirección a login al recargar la página.
 
 ## Convenciones
 
 - Todos los componentes son **standalone** — no hay NgModules
-- Estado local con **signals** (`signal`, `computed`) — no usar `BehaviorSubject` para código nuevo
+- Estado con **signals** (`signal`, `computed`) — no usar `BehaviorSubject`
 - Inyección de dependencias con `inject()` en el cuerpo de la clase
-- Nuevas rutas van en un archivo `<feature>.routes.ts` y se cargan lazy desde `app.routes.ts`
+- Nuevas rutas en un archivo `<feature>.routes.ts`, cargadas lazy desde `app.routes.ts`
 - SCSS usa design tokens de PrimeNG (`var(--p-surface-0)`, `var(--p-primary-color)`, etc.) — evitar colores hardcodeados
+- Tema personalizado `SemanticaPreset`: paleta `navy` (#143049) como primario, `sky` (#77aad7) en dark mode
