@@ -4,17 +4,17 @@ Portal de autogestión para empleados. Permite consultar y gestionar informació
 
 ## Stack
 
-| Tecnología | Versión |
-|---|---|
-| Angular | 20 (standalone components, signals) |
-| PrimeNG | 20.4.0 (tema Aura con preset personalizado) |
-| Fuente | Geist |
+| Tecnología | Versión                                     |
+| ---------- | ------------------------------------------- |
+| Angular    | 20 (standalone components, signals)         |
+| PrimeNG    | 20.4.0 (tema Aura con preset personalizado) |
+| Fuente     | Geist                                       |
 
 ## Requisitos
 
 - Node.js 20+
 - Angular CLI 20
-- Backend en `https://semanticaapi.com.co` (proxied en dev como `/api`)
+- Backend en `https://api.semanticaapi.com.co` (proxied en dev como `/api`)
 
 ## Comandos
 
@@ -76,3 +76,13 @@ Al arrancar la app, un `provideAppInitializer` llama a `POST /auth/seguridad/ref
 - Nuevas rutas en un archivo `<feature>.routes.ts`, cargadas lazy desde `app.routes.ts`
 - SCSS usa design tokens de PrimeNG (`var(--p-surface-0)`, `var(--p-primary-color)`, etc.) — evitar colores hardcodeados
 - Tema personalizado `SemanticaPreset`: paleta `navy` (#143049) como primario, `sky` (#77aad7) en dark mode
+- Commits convencionales obligatorios (validados por Husky + commitlint)
+
+## Documentacion
+
+| Documento                                      | Contenido                                    |
+| ---------------------------------------------- | -------------------------------------------- |
+| [CONTRIBUTING.md](./CONTRIBUTING.md)           | Flujo de trabajo, ramas, commits, PRs, hooks |
+| [docs/RELEASE.md](./docs/RELEASE.md)           | Releases, versionado, changelog, deploys     |
+| [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Arquitectura, patrones, autenticacion, UI    |
+| [CLAUDE.md](./CLAUDE.md)                       | Instrucciones para Claude Code               |
