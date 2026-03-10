@@ -12,4 +12,6 @@ export interface AuthResponse {
 export interface Usuario {
   id: number;
   email: string;
+  tenant_id?: number;
+  role: string;
 }

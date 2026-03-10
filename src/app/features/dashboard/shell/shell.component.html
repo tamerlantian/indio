@@ -30,16 +30,7 @@
     <!-- Sidebar desktop -->
     <aside class="shell-sidebar">
       <nav class="sidebar-nav">
-        @for (item of navItems; track item.route) {
-          <a
-            class="nav-item"
-            [routerLink]="item.route"
-            routerLinkActive="active"
-          >
-            <i [class]="item.icon"></i>
-            <span>{{ item.label }}</span>
-          </a>
-        }
+        <ng-container *ngTemplateOutlet="navTpl; context: { $implicit: navItems }" />
       </nav>
     </aside>
 
@@ -58,7 +49,42 @@
   header="Menú"
 >
   <nav class="sidebar-nav">
-    @for (item of navItems; track item.route) {
+    <ng-container *ngTemplateOutlet="navTpl; context: { $implicit: navItems }" />
+  </nav>
+</p-drawer>
+
+<!-- Template compartido para la navegación -->
+<ng-template #navTpl let-items>
+  @for (item of items; track item.label) {
+    @if (isNavGroup(item)) {
+      <!-- Grupo colapsable -->
+      <button
+        class="nav-group-header"
+        [class.expanded]="isExpanded(item.label)"
+        (click)="toggleGroup(item.label)"
+        [attr.aria-expanded]="isExpanded(item.label)"
+      >
+        <i [class]="item.icon"></i>
+        <span>{{ item.label }}</span>
+        <i class="nav-group-chevron pi pi-chevron-right"></i>
+      </button>
+      @if (isExpanded(item.label)) {
+        <div class="nav-children">
+          @for (child of item.children; track child.route) {
+            <a
+              class="nav-item nav-item--child"
+              [routerLink]="child.route"
+              routerLinkActive="active"
+              (click)="drawerVisible.set(false)"
+            >
+              <i [class]="child.icon"></i>
+              <span>{{ child.label }}</span>
+            </a>
+          }
+        </div>
+      }
+    } @else {
+      <!-- Ítem directo -->
       <a
         class="nav-item"
         [routerLink]="item.route"
@@ -69,5 +95,5 @@
         <span>{{ item.label }}</span>
       </a>
     }
-  </nav>
-</p-drawer>
+  }
+</ng-template>

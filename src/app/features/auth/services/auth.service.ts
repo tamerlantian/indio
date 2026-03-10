@@ -20,7 +20,7 @@ export class AuthService {
    */
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(`${environment.apiUrl}/auth/login`, credentials, {
+      .post<AuthResponse>(`${environment.apiUrl}/auth/seguridad/login`, credentials, {
         withCredentials: true, // permite que el navegador maneje las cookies
       })
       .pipe(

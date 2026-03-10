@@ -1,0 +1,231 @@
+<div class="apikeys-page">
+  <!-- Cabecera -->
+  <div class="page-header">
+    <div class="page-header__info">
+      <h1 class="page-title">
+        <i class="pi pi-key page-title__icon"></i>
+        API Keys
+      </h1>
+      <p class="page-subtitle">Gestiona las claves de acceso para integraciones externas</p>
+    </div>
+    <p-button label="Nueva clave" icon="pi pi-plus" (onClick)="openCreateDialog()" />
+  </div>
+
+  <!-- Banner informativo -->
+  <div class="info-banner">
+    <i class="pi pi-shield info-banner__icon"></i>
+    <p class="info-banner__text">
+      Trata tus API Keys como contraseñas. No las compartas ni las incluyas en código fuente público.
+      Puedes desactivarlas temporalmente o eliminarlas si crees que han sido comprometidas.
+    </p>
+  </div>
+
+  <!-- Estado de carga -->
+  @if (loading()) {
+    <div class="skeleton-list">
+      @for (i of [1, 2, 3]; track i) {
+        <div class="skeleton-row">
+          <p-skeleton width="200px" height="1rem" />
+          <p-skeleton width="100px" height="1rem" />
+          <p-skeleton width="220px" height="1rem" />
+          <p-skeleton width="80px" height="1.5rem" borderRadius="20px" />
+          <p-skeleton width="120px" height="1rem" />
+          <p-skeleton width="80px" height="2rem" borderRadius="8px" />
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Estado vacío -->
+  @if (!loading() && apiKeys().length === 0) {
+    <div class="empty-state">
+      <div class="empty-state__icon-wrap">
+        <i class="pi pi-key empty-state__icon"></i>
+      </div>
+      <h2 class="empty-state__title">Sin API Keys</h2>
+      <p class="empty-state__desc">
+        Aún no has creado ninguna clave. Crea una para comenzar a integrar servicios externos.
+      </p>
+      <p-button
+        label="Crear primera clave"
+        icon="pi pi-plus"
+        [outlined]="true"
+        (onClick)="openCreateDialog()"
+      />
+    </div>
+  }
+
+  <!-- Tabla de claves -->
+  @if (!loading() && apiKeys().length > 0) {
+    <div class="table-card">
+      <p-table [value]="apiKeys()" [rowHover]="true" styleClass="apikeys-table">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nombre</th>
+            <th>Prefix</th>
+            <th>Creada</th>
+            <th>Expira</th>
+            <th>Último uso</th>
+            <th class="col-actions">Acciones</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-key>
+          <tr>
+            <!-- Nombre -->
+            <td>
+              <span class="key-name">{{ key.name }}</span>
+            </td>
+
+            <!-- Prefix -->
+            <td>
+              @if (key.prefix) {
+                <code class="key-preview">{{ key.prefix }}</code>
+              } @else {
+                <span class="date-text date-text--muted">—</span>
+              }
+            </td>
+
+            <!-- Creada -->
+            <td>
+              <span class="date-text">{{ key.created_at | date: 'dd/MM/yyyy' }}</span>
+            </td>
+
+            <!-- Expira -->
+            <td>
+              @if (key.expires_at) {
+                <span class="date-text">{{ key.expires_at | date: 'dd/MM/yyyy' }}</span>
+              } @else {
+                <span class="date-text date-text--muted">Nunca</span>
+              }
+            </td>
+
+            <!-- Último uso -->
+            <td>
+              @if (key.last_used_at) {
+                <span class="date-text">{{ key.last_used_at | date: 'dd/MM/yyyy' }}</span>
+              } @else {
+                <span class="date-text date-text--muted">Nunca</span>
+              }
+            </td>
+
+            <!-- Acciones -->
+            <td class="col-actions">
+              <button
+                class="icon-btn icon-btn--danger"
+                pTooltip="Eliminar clave"
+                tooltipPosition="top"
+                (click)="confirmDelete(key)"
+                aria-label="Eliminar clave"
+              >
+                <i class="pi pi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  }
+</div>
+
+<!-- Diálogo: crear API Key -->
+<p-dialog
+  [visible]="createDialogVisible()"
+  (visibleChange)="createDialogVisible.set($event)"
+  header="Nueva API Key"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="create-dialog"
+  [style]="{ width: '480px' }"
+>
+  <form [formGroup]="createForm" (ngSubmit)="submitCreate()" class="create-form" autocomplete="off">
+    <div class="form-field">
+      <label for="key-name" class="form-label">
+        Nombre <span class="required">*</span>
+      </label>
+      <input
+        id="key-name"
+        pInputText
+        formControlName="name"
+        placeholder="p. ej. Producción webhook"
+        class="w-full"
+        [class.ng-invalid]="createForm.controls.name.invalid && createForm.controls.name.touched"
+      />
+      @if (createForm.controls.name.invalid && createForm.controls.name.touched) {
+        <span class="field-error">
+          @if (createForm.controls.name.errors?.['required']) {
+            El nombre es obligatorio.
+          } @else if (createForm.controls.name.errors?.['minlength']) {
+            Mínimo 3 caracteres.
+          } @else if (createForm.controls.name.errors?.['maxlength']) {
+            Máximo 50 caracteres.
+          }
+        </span>
+      }
+    </div>
+
+
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Cancelar"
+      [text]="true"
+      severity="secondary"
+      (onClick)="createDialogVisible.set(false)"
+    />
+    <p-button
+      label="Crear clave"
+      icon="pi pi-key"
+      [loading]="submitting()"
+      (onClick)="submitCreate()"
+    />
+  </ng-template>
+</p-dialog>
+
+
+<!-- Diálogo: mostrar clave completa (solo una vez) -->
+<p-dialog
+  [visible]="revealDialogVisible()"
+  (visibleChange)="closeRevealDialog()"
+  header="¡Guarda tu clave ahora!"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="false"
+  styleClass="reveal-dialog"
+  [style]="{ width: '520px' }"
+>
+  <div class="reveal-content">
+    <div class="reveal-warning">
+      <i class="pi pi-exclamation-triangle reveal-warning__icon"></i>
+      <p class="reveal-warning__text">
+        Esta es la única vez que podrás ver la clave completa.
+        <strong>Cópiala y guárdala en un lugar seguro</strong> antes de cerrar este diálogo.
+      </p>
+    </div>
+
+    @if (newFullKey()) {
+      <div class="key-reveal-box">
+        <code class="key-reveal-code">{{ newFullKey() }}</code>
+        <button
+          class="copy-btn"
+          [class.copy-btn--copied]="copied()"
+          (click)="copyKey(newFullKey()!)"
+          [attr.aria-label]="copied() ? 'Copiado' : 'Copiar clave'"
+        >
+          <i [class]="copied() ? 'pi pi-check' : 'pi pi-copy'"></i>
+          {{ copied() ? 'Copiado' : 'Copiar' }}
+        </button>
+      </div>
+    }
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Ya la guardé, cerrar" icon="pi pi-lock" (onClick)="closeRevealDialog()" />
+  </ng-template>
+</p-dialog>
+
+<p-toast position="bottom-right" />
+<p-confirmdialog />
