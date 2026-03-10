@@ -1,10 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { CardModule } from 'primeng/card';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../services/auth.service';
 
@@ -13,10 +12,10 @@ import { AuthService } from '../services/auth.service';
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    RouterLink,
     ButtonModule,
     InputTextModule,
     PasswordModule,
-    CardModule,
     MessageModule,
   ],
   templateUrl: './login.component.html',
