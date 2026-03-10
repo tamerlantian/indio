@@ -1,7 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { AuthResponse, LoginRequest, Usuario } from '../models/auth.model';
 import { environment } from '../../../../environments/environment';
 
@@ -24,30 +24,29 @@ export class AuthService {
         withCredentials: true, // permite que el navegador maneje las cookies
       })
       .pipe(
-        tap(response => {
+        tap((response) => {
           this._currentUser.set(response.user);
-        })
+        }),
       );
   }
 
   /**
-   * Rehidrata la sesión usando la cookie HTTP-only vigente.
+   * Obtiene el usuario autenticado usando la cookie HTTP-only vigente.
    * Retorna el usuario si la cookie es válida, o `null` si expiró.
    */
-  refreshSession(): Observable<Usuario | null> {
+  me(): Observable<Usuario | null> {
     return this.http
-      .post<AuthResponse>(`${environment.apiUrl}/auth/seguridad/refresh`, {}, {
+      .get<Usuario>(`${environment.apiUrl}/auth/seguridad/me`, {
         withCredentials: true,
       })
       .pipe(
-        tap(response => {
-          this._currentUser.set(response.user);
+        tap((user) => {
+          this._currentUser.set(user);
         }),
-        map(response => response.user),
         catchError(() => {
           this._currentUser.set(null);
           return of(null);
-        })
+        }),
       );
   }
 
