@@ -44,9 +44,7 @@ export class ShellComponent {
     {
       label: 'Seguridad',
       icon: 'pi pi-shield',
-      children: [
-        { label: 'API Keys', icon: 'pi pi-key', route: '/seguridad/api-keys' },
-      ],
+      children: [{ label: 'API Keys', icon: 'pi pi-key', route: '/seguridad/api-keys' }],
     },
   ];
 
@@ -57,15 +55,19 @@ export class ShellComponent {
   }
 
   toggleGroup(label: string): void {
-    this.expandedGroups.update(set => {
+    this.expandedGroups.update((set) => {
       const next = new Set(set);
-      next.has(label) ? next.delete(label) : next.add(label);
+      if (next.has(label)) {
+        next.delete(label);
+      } else {
+        next.add(label);
+      }
       return next;
     });
   }
 
   toggleDrawer(): void {
-    this.drawerVisible.update(v => !v);
+    this.drawerVisible.update((v) => !v);
   }
 
   logout(): void {
