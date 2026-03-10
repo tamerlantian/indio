@@ -1,0 +1,159 @@
+<div class="landing">
+
+  <!-- ── Navigation ─────────────────────────────── -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <div class="nav__logo">
+        <div class="nav__logo-mark">
+          <span>S</span>
+        </div>
+        <div class="nav__logo-text">
+          <span class="nav__logo-name">Semantica</span>
+          <span class="nav__logo-tag">ERP</span>
+        </div>
+      </div>
+
+      <a routerLink="/auth/login" class="btn btn--outline">
+        <i class="pi pi-sign-in"></i>
+        Ingresar
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── Hero ───────────────────────────────────── -->
+  <section class="hero">
+    <!-- Decorative background mesh -->
+    <div class="hero__bg" aria-hidden="true">
+      <div class="hero__orb hero__orb--1"></div>
+      <div class="hero__orb hero__orb--2"></div>
+      <div class="hero__grid"></div>
+    </div>
+
+    <div class="hero__content">
+      <div class="hero__badge">
+        <i class="pi pi-users"></i>
+        Portal de Empleados
+      </div>
+
+      <h1 class="hero__title">
+        Tu empresa,<br>
+        en la palma<br>
+        <em>de tu mano.</em>
+      </h1>
+
+      <p class="hero__description">
+        Consulta y gestiona toda la información relacionada con tu empresa empleadora:
+        nómina, certificaciones, vacaciones, seguridad social, capacitaciones y mucho más,
+        desde un solo lugar.
+      </p>
+
+      <div class="hero__actions">
+        <a routerLink="/auth/login" class="btn btn--primary btn--lg">
+          Ingresar al Portal
+          <i class="pi pi-arrow-right"></i>
+        </a>
+      </div>
+
+      <!-- Quick stat chips -->
+      <div class="hero__stats">
+        <div class="stat-chip">
+          <i class="pi pi-check-circle"></i>
+          <span>Comprobantes digitales</span>
+        </div>
+        <div class="stat-chip">
+          <i class="pi pi-check-circle"></i>
+          <span>Acceso 24/7</span>
+        </div>
+        <div class="stat-chip">
+          <i class="pi pi-check-circle"></i>
+          <span>100% seguro</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero visual panel -->
+    <div class="hero__visual" aria-hidden="true">
+      <div class="hero__card-stack">
+        <div class="mock-card mock-card--back"></div>
+        <div class="mock-card mock-card--mid"></div>
+        <div class="mock-card mock-card--front">
+          <div class="mock-card__header">
+            <div class="mock-card__avatar"></div>
+            <div class="mock-card__info">
+              <div class="mock-card__line mock-card__line--name"></div>
+              <div class="mock-card__line mock-card__line--sub"></div>
+            </div>
+            <div class="mock-card__badge">Activo</div>
+          </div>
+          <div class="mock-card__divider"></div>
+          <div class="mock-card__rows">
+            <div class="mock-card__row">
+              <i class="pi pi-file-pdf"></i>
+              <div class="mock-card__row-label">Último comprobante</div>
+              <div class="mock-card__row-value">Feb 2026</div>
+            </div>
+            <div class="mock-card__row">
+              <i class="pi pi-calendar-plus"></i>
+              <div class="mock-card__row-label">Vacaciones disponibles</div>
+              <div class="mock-card__row-value mock-card__row-value--accent">15 días</div>
+            </div>
+            <div class="mock-card__row">
+              <i class="pi pi-clock"></i>
+              <div class="mock-card__row-label">Turno asignado</div>
+              <div class="mock-card__row-value">06:00 – 14:00</div>
+            </div>
+            <div class="mock-card__row">
+              <i class="pi pi-heart"></i>
+              <div class="mock-card__row-label">Seguridad social</div>
+              <div class="mock-card__row-value mock-card__row-value--green">Al día</div>
+            </div>
+          </div>
+          <div class="mock-card__btn">Ver mi perfil completo →</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Features ───────────────────────────────── -->
+  <section class="features">
+    <div class="features__inner">
+      <div class="features__header">
+        <p class="features__label">Módulos disponibles</p>
+        <h2 class="features__title">Todo lo que necesitas,<br>en un solo portal.</h2>
+      </div>
+
+      <div class="features__grid">
+        @for (feat of features; track feat.title; let i = $index) {
+          <div class="feat-card" [style.--i]="i">
+            <div class="feat-card__icon">
+              <i class="pi {{ feat.icon }}"></i>
+            </div>
+            <h3 class="feat-card__title">{{ feat.title }}</h3>
+            <p class="feat-card__desc">{{ feat.description }}</p>
+          </div>
+        }
+      </div>
+
+      <div class="features__cta">
+        <a routerLink="/auth/login" class="btn btn--primary btn--lg">
+          <i class="pi pi-sign-in"></i>
+          Acceder ahora
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="nav__logo-mark nav__logo-mark--sm">
+          <span>S</span>
+        </div>
+        <span class="footer__name">Semantica ERP</span>
+      </div>
+      <p class="footer__copy">&copy; {{ currentYear }} Semantica. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+</div>

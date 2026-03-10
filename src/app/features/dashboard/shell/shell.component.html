@@ -1,0 +1,73 @@
+<div class="shell-layout">
+  <!-- Navbar -->
+  <header class="shell-navbar">
+    <div class="navbar-start">
+      <button class="hamburger-btn" (click)="toggleDrawer()" aria-label="Abrir menú">
+        <i class="pi pi-bars"></i>
+      </button>
+      <div class="navbar-brand">
+        <div class="brand-mark">S</div>
+        <span class="navbar-logo">Semantica</span>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      @if (currentUser()) {
+        <div class="user-info">
+          <div class="user-avatar">{{ currentUser()!.email.charAt(0).toUpperCase() }}</div>
+          <span class="user-name">{{ currentUser()!.email }}</span>
+        </div>
+        <div class="navbar-divider"></div>
+      }
+      <button class="logout-btn" (click)="logout()" title="Cerrar sesión">
+        <i class="pi pi-sign-out"></i>
+        <span>Salir</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="shell-body">
+    <!-- Sidebar desktop -->
+    <aside class="shell-sidebar">
+      <nav class="sidebar-nav">
+        @for (item of navItems; track item.route) {
+          <a
+            class="nav-item"
+            [routerLink]="item.route"
+            routerLinkActive="active"
+          >
+            <i [class]="item.icon"></i>
+            <span>{{ item.label }}</span>
+          </a>
+        }
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="shell-content">
+      <router-outlet />
+    </main>
+  </div>
+</div>
+
+<!-- Drawer móvil -->
+<p-drawer
+  [visible]="drawerVisible()"
+  (visibleChange)="drawerVisible.set($event)"
+  position="left"
+  header="Menú"
+>
+  <nav class="sidebar-nav">
+    @for (item of navItems; track item.route) {
+      <a
+        class="nav-item"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        (click)="drawerVisible.set(false)"
+      >
+        <i [class]="item.icon"></i>
+        <span>{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+</p-drawer>

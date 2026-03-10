@@ -1,0 +1,73 @@
+<div class="login-wrapper">
+  <p-card styleClass="login-card">
+    <ng-template pTemplate="header">
+      <div class="login-card__header">
+        <h2 class="login-card__title">Iniciar sesión</h2>
+        <p class="login-card__subtitle">Ingresa tus credenciales para continuar</p>
+      </div>
+    </ng-template>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+      @if (errorMessage()) {
+        <p-message severity="error" [text]="errorMessage()!" styleClass="mb-4 w-full" />
+      }
+
+      <div class="field">
+        <label for="email" class="field__label">Correo electrónico</label>
+        <input
+          pInputText
+          id="email"
+          type="email"
+          formControlName="email"
+          fluid
+          placeholder="usuario@ejemplo.com"
+          [invalid]="emailControl.invalid && emailControl.touched"
+          aria-describedby="email-error"
+        />
+        @if (emailControl.invalid && emailControl.touched) {
+          <small id="email-error" class="field__error">
+            @if (emailControl.hasError('required')) { El correo es requerido. }
+            @else if (emailControl.hasError('email')) { Ingresa un correo válido. }
+          </small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="password" class="field__label">Contraseña</label>
+        <p-password
+          inputId="password"
+          formControlName="password"
+          fluid
+          [feedback]="false"
+          [toggleMask]="true"
+          placeholder="••••••••"
+          [invalid]="passwordControl.invalid && passwordControl.touched"
+          aria-describedby="password-error"
+        />
+        @if (passwordControl.invalid && passwordControl.touched) {
+          <small id="password-error" class="field__error">
+            @if (passwordControl.hasError('required')) { La contraseña es requerida. }
+            @else if (passwordControl.hasError('minlength')) { Mínimo 6 caracteres. }
+          </small>
+        }
+      </div>
+
+      <p-button
+        type="submit"
+        label="Ingresar"
+        fluid
+        class="mt-2 block"
+        [loading]="isLoading()"
+        [disabled]="isLoading()"
+      />
+
+      <div class="login-links">
+        <a class="login-link" href="#">¿Olvidaste tu contraseña?</a>
+        <span class="login-links__sep">·</span>
+        <a class="login-link" href="#">Registrarse</a>
+      </div>
+
+    </form>
+  </p-card>
+</div>
