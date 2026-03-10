@@ -89,14 +89,14 @@ export class ApiKeysComponent implements OnInit {
     const { name, tenant_id } = this.createForm.getRawValue();
 
     this.apiKeyService.createApiKey({ name: name!, tenant_id: tenant_id! }).subscribe({
-      next: res => {
+      next: (res) => {
         this.submitting.set(false);
         this.createDialogVisible.set(false);
         this.newFullKey.set(res.api_key);
         this.revealDialogVisible.set(true);
         this.loadKeys();
       },
-      error: err => {
+      error: (err) => {
         this.submitting.set(false);
         this.messageService.add({
           severity: 'error',

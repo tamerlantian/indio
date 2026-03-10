@@ -77,7 +77,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor])),
     provideAppInitializer(() => {
       const auth = inject(AuthService);
-      return firstValueFrom(auth.refreshSession());
+      return firstValueFrom(auth.me());
     }),
     provideAnimationsAsync(),
     providePrimeNG({

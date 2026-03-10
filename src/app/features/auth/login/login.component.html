@@ -1,5 +1,4 @@
 <div class="login-layout">
-
   <!-- ── Panel de marca ─────────────────────────────── -->
   <div class="brand-panel" aria-hidden="true">
     <div class="brand-panel__bg">
@@ -9,26 +8,22 @@
     </div>
 
     <div class="brand-panel__content">
-      <div class="brand-panel__logo">
-        <div class="brand-panel__logo-mark"><span>S</span></div>
-        <div class="brand-panel__logo-text">
-          <span class="brand-panel__logo-name">Semantica</span>
-          <span class="brand-panel__logo-tag">Seguridad</span>
+      <div class="brand-panel__logo"></div>
+
+      <div class="brand-panel__bottom">
+        <div class="brand-panel__body">
+          <h1 class="brand-panel__title">Portal de<br />administración</h1>
+          <p class="brand-panel__desc">
+            Gestione sus claves de API y configure los permisos de seguridad de su empresa de forma
+            centralizada.
+          </p>
         </div>
-      </div>
 
-      <div class="brand-panel__body">
-        <h1 class="brand-panel__title">Portal de<br>administración</h1>
-        <p class="brand-panel__desc">
-          Gestione sus claves de API y configure los permisos de seguridad
-          de su empresa de forma centralizada.
-        </p>
-      </div>
-
-      <div class="brand-panel__chips">
-        <div class="brand-chip"><i class="pi pi-shield"></i> Acceso seguro</div>
-        <div class="brand-chip"><i class="pi pi-lock"></i> HTTP-only cookies</div>
-        <div class="brand-chip"><i class="pi pi-verified"></i> Sesión cifrada</div>
+        <div class="brand-panel__chips">
+          <div class="brand-chip"><i class="pi pi-shield"></i> Acceso seguro</div>
+          <div class="brand-chip"><i class="pi pi-lock"></i> HTTP-only cookies</div>
+          <div class="brand-chip"><i class="pi pi-verified"></i> Sesión cifrada</div>
+        </div>
       </div>
     </div>
   </div>
@@ -36,6 +31,9 @@
   <!-- ── Panel de formulario ────────────────────────── -->
   <div class="form-panel">
     <div class="form-panel__inner">
+      <div class="form-panel__logo">
+        <img src="fondo_transparente.png" alt="Semantica Seguridad" class="form-panel__logo-img" />
+      </div>
 
       <a routerLink="/" class="form-panel__back">
         <i class="pi pi-arrow-left"></i>
@@ -48,7 +46,6 @@
       </div>
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="login-form">
-
         @if (errorMessage()) {
           <p-message severity="error" [text]="errorMessage()!" styleClass="w-full" />
         }
@@ -67,8 +64,11 @@
           />
           @if (emailControl.invalid && emailControl.touched) {
             <small id="email-error" class="field__error">
-              @if (emailControl.hasError('required')) { El correo es requerido. }
-              @else if (emailControl.hasError('email')) { Ingresa un correo válido. }
+              @if (emailControl.hasError('required')) {
+                El correo es requerido.
+              } @else if (emailControl.hasError('email')) {
+                Ingresa un correo válido.
+              }
             </small>
           }
         </div>
@@ -87,8 +87,11 @@
           />
           @if (passwordControl.invalid && passwordControl.touched) {
             <small id="password-error" class="field__error">
-              @if (passwordControl.hasError('required')) { La contraseña es requerida. }
-              @else if (passwordControl.hasError('minlength')) { Mínimo 6 caracteres. }
+              @if (passwordControl.hasError('required')) {
+                La contraseña es requerida.
+              } @else if (passwordControl.hasError('minlength')) {
+                Mínimo 6 caracteres.
+              }
             </small>
           }
         </div>
@@ -101,9 +104,7 @@
           [loading]="isLoading()"
           [disabled]="isLoading()"
         />
-
       </form>
     </div>
   </div>
-
 </div>

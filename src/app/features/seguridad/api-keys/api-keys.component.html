@@ -15,8 +15,8 @@
   <div class="info-banner">
     <i class="pi pi-shield info-banner__icon"></i>
     <p class="info-banner__text">
-      Trata tus API Keys como contraseñas. No las compartas ni las incluyas en código fuente público.
-      Puedes desactivarlas temporalmente o eliminarlas si crees que han sido comprometidas.
+      Trata tus API Keys como contraseñas. No las compartas ni las incluyas en código fuente
+      público. Puedes desactivarlas temporalmente o eliminarlas si crees que han sido comprometidas.
     </p>
   </div>
 
@@ -141,9 +141,7 @@
 >
   <form [formGroup]="createForm" (ngSubmit)="submitCreate()" class="create-form" autocomplete="off">
     <div class="form-field">
-      <label for="key-name" class="form-label">
-        Nombre <span class="required">*</span>
-      </label>
+      <label for="key-name" class="form-label"> Nombre <span class="required">*</span> </label>
       <input
         id="key-name"
         pInputText
@@ -164,8 +162,6 @@
         </span>
       }
     </div>
-
-
   </form>
 
   <ng-template pTemplate="footer">
@@ -183,7 +179,6 @@
     />
   </ng-template>
 </p-dialog>
-
 
 <!-- Diálogo: mostrar clave completa (solo una vez) -->
 <p-dialog

@@ -59,6 +59,13 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ env.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
+      - name: Validate deploy path
+        run: |
+          if [[ "$DEPLOY_PATH" == "/var/www/html" || "$DEPLOY_PATH" == "/var/www" || -z "$DEPLOY_PATH" ]]; then
+            echo "ERROR: DEPLOY_PATH '$DEPLOY_PATH' is too broad. Must include a project subdirectory."
+            exit 1
+          fi
+
       - name: Deploy via rsync
         run: |
           rsync -avz --delete \

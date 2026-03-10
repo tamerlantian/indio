@@ -1,16 +1,9 @@
 <div class="landing">
-
   <!-- ── Navigation ─────────────────────────────── -->
   <nav class="nav">
     <div class="nav__inner">
       <div class="nav__logo">
-        <div class="nav__logo-mark">
-          <span>S</span>
-        </div>
-        <div class="nav__logo-text">
-          <span class="nav__logo-name">Semantica</span>
-          <span class="nav__logo-tag">Seguridad</span>
-        </div>
+        <img src="fondo_transparente.png" alt="Semantica Seguridad" class="nav__logo-img" />
       </div>
 
       <div class="nav__links">
@@ -29,10 +22,9 @@
     </div>
 
     <div class="main__content">
-      <div class="main__eyebrow">Portal de Seguridad</div>
+      <div class="main__eyebrow">Semantica ERP API</div>
 
       <div class="panels">
-
         <!-- Panel izquierdo: Administración -->
         <div class="panel panel--left">
           <div class="panel__icon">
@@ -41,8 +33,8 @@
           <div class="panel__body">
             <h2 class="panel__title">Administración</h2>
             <p class="panel__desc">
-              Gestione las claves de acceso a la API y configure los permisos
-              de seguridad de su empresa desde un solo lugar.
+              Gestione las claves de acceso a la API y configure los permisos de seguridad de su
+              empresa desde un solo lugar.
             </p>
           </div>
           <a routerLink="/auth/login" class="btn btn--primary">
@@ -62,16 +54,20 @@
           <div class="panel__body">
             <h2 class="panel__title">API Reference</h2>
             <p class="panel__desc">
-              Explore la documentación completa de nuestros servicios y comience
-              a integrar su aplicación con la plataforma.
+              Explore la documentación completa de nuestros servicios y comience a integrar su
+              aplicación con la plataforma.
             </p>
           </div>
-          <a href="https://mintly.com" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
+          <a
+            href="https://mintly.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn--ghost"
+          >
             Ir a documentación
             <i class="pi pi-external-link"></i>
           </a>
         </div>
-
       </div>
     </div>
   </main>
@@ -79,8 +75,9 @@
   <!-- ── Footer ─────────────────────────────────── -->
   <footer class="footer" id="acerca">
     <div class="footer__inner">
-      <span class="footer__copy">&copy; {{ currentYear }} Semantica. Todos los derechos reservados.</span>
+      <span class="footer__copy"
+        >&copy; {{ currentYear }} Semantica. Todos los derechos reservados.</span
+      >
     </div>
   </footer>
-
 </div>
