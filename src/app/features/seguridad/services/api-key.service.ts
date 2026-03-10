@@ -23,7 +23,7 @@ export class ApiKeyService {
       .get<ApiKey[]>(`${environment.apiUrl}/auth/api-key/lista`, {
         params: { tenant_id: tenantId! },
       })
-      .pipe(tap(keys => this._apiKeys.set(keys)));
+      .pipe(tap((keys) => this._apiKeys.set(keys)));
   }
 
   createApiKey(req: CreateApiKeyRequest): Observable<CreateApiKeyResponse> {
@@ -33,12 +33,16 @@ export class ApiKeyService {
   toggleApiKey(id: number, active: boolean): Observable<ApiKey> {
     return this.http
       .patch<ApiKey>(`${environment.apiUrl}/security/api-keys/${id}`, { active })
-      .pipe(tap(updated => this._apiKeys.update(keys => keys.map(k => (k.id === id ? updated : k)))));
+      .pipe(
+        tap((updated) =>
+          this._apiKeys.update((keys) => keys.map((k) => (k.id === id ? updated : k))),
+        ),
+      );
   }
 
   deleteApiKey(id: number): Observable<void> {
     return this.http
       .delete<void>(`${environment.apiUrl}/security/api-keys/${id}`)
-      .pipe(tap(() => this._apiKeys.update(keys => keys.filter(k => k.id !== id))));
+      .pipe(tap(() => this._apiKeys.update((keys) => keys.filter((k) => k.id !== id))));
   }
 }

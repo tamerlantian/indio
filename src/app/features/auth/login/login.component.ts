@@ -58,6 +58,10 @@ export class LoginComponent {
     });
   }
 
-  get emailControl() { return this.form.controls.email; }
-  get passwordControl() { return this.form.controls.password; }
+  get emailControl() {
+    return this.form.controls.email;
+  }
+  get passwordControl() {
+    return this.form.controls.password;
+  }
 }
