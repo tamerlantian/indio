@@ -9,150 +9,77 @@
         </div>
         <div class="nav__logo-text">
           <span class="nav__logo-name">Semantica</span>
-          <span class="nav__logo-tag">ERP</span>
+          <span class="nav__logo-tag">Seguridad</span>
         </div>
       </div>
 
-      <a routerLink="/auth/login" class="btn btn--outline">
-        <i class="pi pi-sign-in"></i>
-        Ingresar
-      </a>
+      <div class="nav__links">
+        <a href="mailto:contacto@semantica.com.co" class="nav__link">Contáctenos</a>
+        <a href="#acerca" class="nav__link">Acerca de</a>
+      </div>
     </div>
   </nav>
 
-  <!-- ── Hero ───────────────────────────────────── -->
-  <section class="hero">
-    <!-- Decorative background mesh -->
-    <div class="hero__bg" aria-hidden="true">
-      <div class="hero__orb hero__orb--1"></div>
-      <div class="hero__orb hero__orb--2"></div>
-      <div class="hero__grid"></div>
+  <!-- ── Main ───────────────────────────────────── -->
+  <main class="main">
+    <div class="main__bg" aria-hidden="true">
+      <div class="main__orb main__orb--1"></div>
+      <div class="main__orb main__orb--2"></div>
+      <div class="main__grid"></div>
     </div>
 
-    <div class="hero__content">
-      <div class="hero__badge">
-        <i class="pi pi-users"></i>
-        Portal de Empleados
-      </div>
+    <div class="main__content">
+      <div class="main__eyebrow">Portal de Seguridad</div>
 
-      <h1 class="hero__title">
-        Tu empresa,<br>
-        en la palma<br>
-        <em>de tu mano.</em>
-      </h1>
+      <div class="panels">
 
-      <p class="hero__description">
-        Consulta y gestiona toda la información relacionada con tu empresa empleadora:
-        nómina, certificaciones, vacaciones, seguridad social, capacitaciones y mucho más,
-        desde un solo lugar.
-      </p>
-
-      <div class="hero__actions">
-        <a routerLink="/auth/login" class="btn btn--primary btn--lg">
-          Ingresar al Portal
-          <i class="pi pi-arrow-right"></i>
-        </a>
-      </div>
-
-      <!-- Quick stat chips -->
-      <div class="hero__stats">
-        <div class="stat-chip">
-          <i class="pi pi-check-circle"></i>
-          <span>Comprobantes digitales</span>
-        </div>
-        <div class="stat-chip">
-          <i class="pi pi-check-circle"></i>
-          <span>Acceso 24/7</span>
-        </div>
-        <div class="stat-chip">
-          <i class="pi pi-check-circle"></i>
-          <span>100% seguro</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Hero visual panel -->
-    <div class="hero__visual" aria-hidden="true">
-      <div class="hero__card-stack">
-        <div class="mock-card mock-card--back"></div>
-        <div class="mock-card mock-card--mid"></div>
-        <div class="mock-card mock-card--front">
-          <div class="mock-card__header">
-            <div class="mock-card__avatar"></div>
-            <div class="mock-card__info">
-              <div class="mock-card__line mock-card__line--name"></div>
-              <div class="mock-card__line mock-card__line--sub"></div>
-            </div>
-            <div class="mock-card__badge">Activo</div>
+        <!-- Panel izquierdo: Administración -->
+        <div class="panel panel--left">
+          <div class="panel__icon">
+            <i class="pi pi-shield"></i>
           </div>
-          <div class="mock-card__divider"></div>
-          <div class="mock-card__rows">
-            <div class="mock-card__row">
-              <i class="pi pi-file-pdf"></i>
-              <div class="mock-card__row-label">Último comprobante</div>
-              <div class="mock-card__row-value">Feb 2026</div>
-            </div>
-            <div class="mock-card__row">
-              <i class="pi pi-calendar-plus"></i>
-              <div class="mock-card__row-label">Vacaciones disponibles</div>
-              <div class="mock-card__row-value mock-card__row-value--accent">15 días</div>
-            </div>
-            <div class="mock-card__row">
-              <i class="pi pi-clock"></i>
-              <div class="mock-card__row-label">Turno asignado</div>
-              <div class="mock-card__row-value">06:00 – 14:00</div>
-            </div>
-            <div class="mock-card__row">
-              <i class="pi pi-heart"></i>
-              <div class="mock-card__row-label">Seguridad social</div>
-              <div class="mock-card__row-value mock-card__row-value--green">Al día</div>
-            </div>
+          <div class="panel__body">
+            <h2 class="panel__title">Administración</h2>
+            <p class="panel__desc">
+              Gestione las claves de acceso a la API y configure los permisos
+              de seguridad de su empresa desde un solo lugar.
+            </p>
           </div>
-          <div class="mock-card__btn">Ver mi perfil completo →</div>
+          <a routerLink="/auth/login" class="btn btn--primary">
+            Iniciar sesión
+            <i class="pi pi-arrow-right"></i>
+          </a>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ── Features ───────────────────────────────── -->
-  <section class="features">
-    <div class="features__inner">
-      <div class="features__header">
-        <p class="features__label">Módulos disponibles</p>
-        <h2 class="features__title">Todo lo que necesitas,<br>en un solo portal.</h2>
-      </div>
+        <!-- Divisor -->
+        <div class="divider" aria-hidden="true"></div>
 
-      <div class="features__grid">
-        @for (feat of features; track feat.title; let i = $index) {
-          <div class="feat-card" [style.--i]="i">
-            <div class="feat-card__icon">
-              <i class="pi {{ feat.icon }}"></i>
-            </div>
-            <h3 class="feat-card__title">{{ feat.title }}</h3>
-            <p class="feat-card__desc">{{ feat.description }}</p>
+        <!-- Panel derecho: API Reference -->
+        <div class="panel panel--right">
+          <div class="panel__icon panel__icon--blue">
+            <i class="pi pi-code"></i>
           </div>
-        }
-      </div>
+          <div class="panel__body">
+            <h2 class="panel__title">API Reference</h2>
+            <p class="panel__desc">
+              Explore la documentación completa de nuestros servicios y comience
+              a integrar su aplicación con la plataforma.
+            </p>
+          </div>
+          <a href="https://mintly.com" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
+            Mintly
+            <i class="pi pi-external-link"></i>
+          </a>
+        </div>
 
-      <div class="features__cta">
-        <a routerLink="/auth/login" class="btn btn--primary btn--lg">
-          <i class="pi pi-sign-in"></i>
-          Acceder ahora
-        </a>
       </div>
     </div>
-  </section>
+  </main>
 
   <!-- ── Footer ─────────────────────────────────── -->
-  <footer class="footer">
+  <footer class="footer" id="acerca">
     <div class="footer__inner">
-      <div class="footer__brand">
-        <div class="nav__logo-mark nav__logo-mark--sm">
-          <span>S</span>
-        </div>
-        <span class="footer__name">Semantica ERP</span>
-      </div>
-      <p class="footer__copy">&copy; {{ currentYear }} Semantica. Todos los derechos reservados.</p>
+      <span class="footer__copy">&copy; {{ currentYear }} Semantica. Todos los derechos reservados.</span>
     </div>
   </footer>
 
