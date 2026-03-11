@@ -4,6 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiKey, CreateApiKeyRequest, CreateApiKeyResponse } from '../models/api-key.model';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../auth/services/auth.service';
+import { API_ENDPOINTS } from '../../../core/constants/api.constants';
 
 @Injectable({ providedIn: 'root' })
 export class ApiKeyService {
@@ -20,19 +21,22 @@ export class ApiKeyService {
   getApiKeys(): Observable<ApiKey[]> {
     const tenantId = this.authService.currentUser()?.tenant_id;
     return this.http
-      .get<ApiKey[]>(`${environment.apiUrl}/auth/api-key/lista`, {
+      .get<ApiKey[]>(`${environment.apiUrl}${API_ENDPOINTS.API_KEY_LIST}`, {
         params: { tenant_id: tenantId! },
       })
       .pipe(tap((keys) => this._apiKeys.set(keys)));
   }
 
   createApiKey(req: CreateApiKeyRequest): Observable<CreateApiKeyResponse> {
-    return this.http.post<CreateApiKeyResponse>(`${environment.apiUrl}/auth/api-key/nuevo`, req);
+    return this.http.post<CreateApiKeyResponse>(
+      `${environment.apiUrl}${API_ENDPOINTS.API_KEY_CREATE}`,
+      req,
+    );
   }
 
   toggleApiKey(id: number, active: boolean): Observable<ApiKey> {
     return this.http
-      .patch<ApiKey>(`${environment.apiUrl}/security/api-keys/${id}`, { active })
+      .patch<ApiKey>(`${environment.apiUrl}${API_ENDPOINTS.API_KEY_BY_ID(id)}`, { active })
       .pipe(
         tap((updated) =>
           this._apiKeys.update((keys) => keys.map((k) => (k.id === id ? updated : k))),
@@ -42,7 +46,7 @@ export class ApiKeyService {
 
   deleteApiKey(id: number): Observable<void> {
     return this.http
-      .delete<void>(`${environment.apiUrl}/security/api-keys/${id}`)
+      .delete<void>(`${environment.apiUrl}${API_ENDPOINTS.API_KEY_BY_ID(id)}`)
       .pipe(tap(() => this._apiKeys.update((keys) => keys.filter((k) => k.id !== id))));
   }
 }

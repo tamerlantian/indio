@@ -29,7 +29,7 @@ import { AuthService } from '../../auth/services/auth.service';
     TooltipModule,
     SkeletonModule,
   ],
-  providers: [MessageService, ConfirmationService],
+  providers: [ConfirmationService],
   templateUrl: './api-keys.component.html',
   styleUrl: './api-keys.component.scss',
 })
