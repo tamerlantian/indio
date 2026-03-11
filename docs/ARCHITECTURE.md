@@ -131,11 +131,11 @@ Geist (sans-serif), cargada desde `node_modules/geist/dist/fonts/`.
 
 ## Entornos
 
-| Entorno     | `apiUrl`                                       | Archivo                  |
-| ----------- | ---------------------------------------------- | ------------------------ |
-| Development | `/api` (proxy a `https://semanticaapi.com.co`) | `environment.ts`         |
-| Staging     | `https://api.semanticaapi.com.co`              | `environment.staging.ts` |
-| Production  | `https://api.semanticaapi.com.co`              | `environment.prod.ts`    |
+| Entorno     | `apiUrl`                                           | Archivo                  |
+| ----------- | -------------------------------------------------- | ------------------------ |
+| Development | `/api` (proxy a `https://api.semanticaapi.com.co`) | `environment.ts`         |
+| Staging     | `https://api.semanticaapi.com.co`                  | `environment.staging.ts` |
+| Production  | `https://api.semanticaapi.com.co`                  | `environment.prod.ts`    |
 
 ## Testing
 

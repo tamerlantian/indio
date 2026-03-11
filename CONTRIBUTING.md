@@ -164,7 +164,7 @@ npm run format:check                   # Verificar formato sin modificar
 
 ### Proxy de desarrollo
 
-En modo desarrollo, las peticiones a `/api` se redirigen automaticamente a `https://semanticaapi.com.co` mediante el proxy configurado en `proxy.conf.json`. No necesitas levantar el backend localmente.
+En modo desarrollo, las peticiones a `/api` se redirigen automaticamente a `https://api.semanticaapi.com.co` mediante el proxy configurado en `proxy.conf.json`. No necesitas levantar el backend localmente.
 
 ## Estructura de archivos para nuevos features
 
