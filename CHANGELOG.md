@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.1](https://github.com/tamerlantian/indio/compare/v0.0.0...v0.0.1) (2026-03-11)
+
+### Bug Fixes
+
+- add environment file replacement for production build ([a184b87](https://github.com/tamerlantian/indio/commit/a184b8703dc682c1bdcb4d680e644ca9386c7009))
+
 ## 0.0.0 (2026-03-11)
 
 ### Features
