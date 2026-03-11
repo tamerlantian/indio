@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { AuthResponse, LoginRequest, Usuario } from '../models/auth.model';
 import { environment } from '../../../../environments/environment';
-import { API_ENDPOINTS } from '../../../core/constants/api.constants';
-import { APP_ROUTES } from '../../../core/constants/routes.constants';
+import { API_ENDPOINTS } from '../../../core/constants/api-endpoints.constants';
+import { ROUTE_PATHS } from '../../../core/constants/route-paths.constants';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -22,7 +22,7 @@ export class AuthService {
    */
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(`${environment.apiUrl}${API_ENDPOINTS.AUTH_LOGIN}`, credentials, {
+      .post<AuthResponse>(`${environment.apiUrl}${API_ENDPOINTS.auth.login}`, credentials, {
         withCredentials: true,
       })
       .pipe(
@@ -38,7 +38,7 @@ export class AuthService {
    */
   me(): Observable<Usuario | null> {
     return this.http
-      .get<Usuario>(`${environment.apiUrl}${API_ENDPOINTS.AUTH_ME}`, {
+      .get<Usuario>(`${environment.apiUrl}${API_ENDPOINTS.auth.me}`, {
         withCredentials: true,
       })
       .pipe(
@@ -57,7 +57,7 @@ export class AuthService {
    */
   refresh(): Observable<void> {
     return this.http.post<void>(
-      `${environment.apiUrl}${API_ENDPOINTS.AUTH_REFRESH}`,
+      `${environment.apiUrl}${API_ENDPOINTS.auth.refresh}`,
       {},
       { withCredentials: true },
     );
@@ -65,7 +65,7 @@ export class AuthService {
 
   logout(): void {
     this.http
-      .post(`${environment.apiUrl}${API_ENDPOINTS.AUTH_LOGOUT}`, {}, { withCredentials: true })
+      .post(`${environment.apiUrl}${API_ENDPOINTS.auth.logout}`, {}, { withCredentials: true })
       .subscribe({ complete: () => this._clearSession() });
   }
 
@@ -79,6 +79,6 @@ export class AuthService {
 
   private _clearSession(): void {
     this._currentUser.set(null);
-    this.router.navigate([APP_ROUTES.AUTH_LOGIN]);
+    this.router.navigate([ROUTE_PATHS.auth.login]);
   }
 }

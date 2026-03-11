@@ -1,25 +1,25 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpStatusCode } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs';
-import { MessageService } from 'primeng/api';
+import { ToastService } from '../services/toast.service';
 import { AuthService } from '../../features/auth/services/auth.service';
-import { API_ENDPOINTS } from '../constants/api.constants';
+import { API_ENDPOINTS } from '../constants/api-endpoints.constants';
 
 let isRefreshing = false;
 const refreshSubject$ = new BehaviorSubject<boolean | null>(null);
 
 const AUTH_ENDPOINTS = [
-  API_ENDPOINTS.AUTH_LOGIN,
-  API_ENDPOINTS.AUTH_LOGOUT,
-  API_ENDPOINTS.AUTH_REFRESH,
-  API_ENDPOINTS.AUTH_ME,
+  API_ENDPOINTS.auth.login,
+  API_ENDPOINTS.auth.logout,
+  API_ENDPOINTS.auth.refresh,
+  API_ENDPOINTS.auth.me,
 ];
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-  const messageService = inject(MessageService);
+  const toast = inject(ToastService);
   const authService = inject(AuthService);
 
-  const isLoginEndpoint = req.url.includes(API_ENDPOINTS.AUTH_LOGIN);
+  const isLoginEndpoint = req.url.includes(API_ENDPOINTS.auth.login);
   const isAuthEndpoint = AUTH_ENDPOINTS.some((endpoint) => req.url.includes(endpoint));
 
   return next(req).pipe(
@@ -27,12 +27,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       const status = error.status;
 
       if (status === 0) {
-        messageService.add({
-          severity: 'error',
-          summary: 'Sin conexión',
-          detail: 'No se pudo conectar con el servidor. Verifica tu conexión a internet.',
-        });
-      } else if (status === 401) {
+        toast.error(
+          'Sin conexión',
+          'No se pudo conectar con el servidor. Verifica tu conexión a internet.',
+        );
+      } else if (status === HttpStatusCode.Unauthorized) {
         if (isAuthEndpoint) {
           return throwError(() => error);
         }
@@ -66,26 +65,20 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             return throwError(() => error);
           }),
         );
-      } else if (status === 403) {
-        messageService.add({
-          severity: 'warn',
-          summary: 'Acceso denegado',
-          detail: 'No tienes permisos para realizar esta acción.',
-        });
-      } else if (status >= 400 && status < 500) {
+      } else if (status === HttpStatusCode.Forbidden) {
+        toast.warn('Acceso denegado', 'No tienes permisos para realizar esta acción.');
+      } else if (
+        status >= HttpStatusCode.BadRequest &&
+        status < HttpStatusCode.InternalServerError
+      ) {
         if (!isLoginEndpoint) {
-          messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: error.error?.message ?? 'Ocurrió un error en la solicitud.',
-          });
+          toast.error('Error', error.error?.message ?? 'Ocurrió un error en la solicitud.');
         }
-      } else if (status >= 500) {
-        messageService.add({
-          severity: 'error',
-          summary: 'Error del servidor',
-          detail: 'Ocurrió un error inesperado. Intenta nuevamente más tarde.',
-        });
+      } else if (status >= HttpStatusCode.InternalServerError) {
+        toast.error(
+          'Error del servidor',
+          'Ocurrió un error inesperado. Intenta nuevamente más tarde.',
+        );
       }
 
       return throwError(() => error);

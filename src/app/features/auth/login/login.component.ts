@@ -7,7 +7,7 @@ import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../services/auth.service';
 import { isSafeReturnUrl } from '../../../core/utils/url.utils';
-import { APP_ROUTES } from '../../../core/constants/routes.constants';
+import { ROUTE_PATHS } from '../../../core/constants/route-paths.constants';
 
 @Component({
   selector: 'app-login',
@@ -51,7 +51,7 @@ export class LoginComponent {
     this.authService.login({ email: email!, password: password!, client_type: 'web' }).subscribe({
       next: () => {
         const raw = this.route.snapshot.queryParamMap.get('returnUrl');
-        const returnUrl = isSafeReturnUrl(raw) ? raw! : APP_ROUTES.DASHBOARD;
+        const returnUrl = isSafeReturnUrl(raw) ? raw! : ROUTE_PATHS.dashboard.root;
         this.router.navigateByUrl(returnUrl);
       },
       error: (err) => {

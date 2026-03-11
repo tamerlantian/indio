@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../../features/auth/services/auth.service';
-import { APP_ROUTES } from '../constants/routes.constants';
+import { ROUTE_PATHS } from '../constants/route-paths.constants';
 
 export const publicGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
@@ -9,5 +9,5 @@ export const publicGuard: CanActivateFn = () => {
 
   if (!auth.isAuthenticated()) return true;
 
-  return router.createUrlTree([APP_ROUTES.DASHBOARD]);
+  return router.createUrlTree([ROUTE_PATHS.dashboard.root]);
 };
