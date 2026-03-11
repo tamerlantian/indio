@@ -75,6 +75,18 @@ export class ApiKeysComponent implements OnInit {
 
   openCreateDialog(): void {
     const tenantId = this.authService.currentUser()?.tenant_id ?? null;
+
+    if (!tenantId) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Tenant requerido',
+        detail:
+          'Tu cuenta no tiene un tenant asignado. Contacta al administrador para poder crear API Keys.',
+        life: 6000,
+      });
+      return;
+    }
+
     this.createForm.reset({ tenant_id: tenantId });
     this.createDialogVisible.set(true);
   }
