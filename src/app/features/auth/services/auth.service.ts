@@ -52,6 +52,17 @@ export class AuthService {
       );
   }
 
+  /**
+   * Renueva las cookies HTTP-only llamando al endpoint de refresh.
+   */
+  refresh(): Observable<void> {
+    return this.http.post<void>(
+      `${environment.apiUrl}${API_ENDPOINTS.AUTH_REFRESH}`,
+      {},
+      { withCredentials: true },
+    );
+  }
+
   logout(): void {
     this.http
       .post(`${environment.apiUrl}${API_ENDPOINTS.AUTH_LOGOUT}`, {}, { withCredentials: true })

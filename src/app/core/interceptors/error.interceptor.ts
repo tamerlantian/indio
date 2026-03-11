@@ -1,16 +1,26 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../../features/auth/services/auth.service';
 import { API_ENDPOINTS } from '../constants/api.constants';
+
+let isRefreshing = false;
+const refreshSubject$ = new BehaviorSubject<boolean | null>(null);
+
+const AUTH_ENDPOINTS = [
+  API_ENDPOINTS.AUTH_LOGIN,
+  API_ENDPOINTS.AUTH_LOGOUT,
+  API_ENDPOINTS.AUTH_REFRESH,
+  API_ENDPOINTS.AUTH_ME,
+];
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const messageService = inject(MessageService);
   const authService = inject(AuthService);
 
   const isLoginEndpoint = req.url.includes(API_ENDPOINTS.AUTH_LOGIN);
-  const isMeEndpoint = req.url.includes(API_ENDPOINTS.AUTH_ME);
+  const isAuthEndpoint = AUTH_ENDPOINTS.some((endpoint) => req.url.includes(endpoint));
 
   return next(req).pipe(
     catchError((error) => {
@@ -23,9 +33,39 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           detail: 'No se pudo conectar con el servidor. Verifica tu conexión a internet.',
         });
       } else if (status === 401) {
-        if (!isMeEndpoint) {
-          authService.forceLogout();
+        if (isAuthEndpoint) {
+          return throwError(() => error);
         }
+
+        if (!isRefreshing) {
+          isRefreshing = true;
+          refreshSubject$.next(null);
+
+          return authService.refresh().pipe(
+            switchMap(() => {
+              isRefreshing = false;
+              refreshSubject$.next(true);
+              return next(req);
+            }),
+            catchError((refreshError) => {
+              isRefreshing = false;
+              refreshSubject$.next(false);
+              authService.forceLogout();
+              return throwError(() => refreshError);
+            }),
+          );
+        }
+
+        return refreshSubject$.pipe(
+          filter((result) => result !== null),
+          take(1),
+          switchMap((success) => {
+            if (success) {
+              return next(req);
+            }
+            return throwError(() => error);
+          }),
+        );
       } else if (status === 403) {
         messageService.add({
           severity: 'warn',
