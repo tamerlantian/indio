@@ -5,7 +5,6 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -24,7 +23,6 @@ import { AuthService } from '../../auth/services/auth.service';
     TableModule,
     DialogModule,
     InputTextModule,
-    ToastModule,
     ConfirmDialogModule,
     TooltipModule,
     SkeletonModule,
