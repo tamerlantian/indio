@@ -20,13 +20,14 @@ ng test --include="**/foo.spec.ts"  # Run a single test file
 **Dependency injection** — always use `inject()` function, not constructor injection.
 
 **Feature-based lazy loading:**
+
 - `/` → `landing` (public, redirects authenticated users to `/dashboard`)
 - `/auth` → `features/auth` (public guard blocks authenticated users)
 - `/dashboard` → `features/dashboard` (auth guard required)
 
 **Auth flow:** HTTP-only cookies via `withCredentials: true` (set in `core/interceptors/auth.interceptor.ts`). No localStorage. The `AuthService` holds `_currentUser` as a signal. Guards in both `core/guards/` and `features/auth/guards/` — the auth guard redirects to login with `returnUrl` query param.
 
-**Backend:** `https://semanticaapi.com.co` in dev, `/api` in prod (see `src/environments/`).
+**Backend:** `https://api.semanticaapi.com.co` in dev, `/api` in prod (see `src/environments/`).
 
 **UI:** PrimeNG 20 with Aura theme + Geist font. Use PrimeNG components and design tokens in SCSS. Dark mode supported via `.dark-mode` class on the root.
 
@@ -43,9 +44,10 @@ Strict mode is fully enabled including `strictTemplates`, `strictInjectionParame
 - 2-space indentation (enforced by `.editorconfig`)
 
 ## Guidelines
+
 - Siempre usa buenas prácticas de programación
 - Escribe código limpio y mantenible
 - Documenta el código de forma clara y concisa
 - Sigue las convenciones del proyecto para la arquitectura y estructura de archivos
-- Usa el mcp de context7 en caso de necesitar entender algunas funcionalidades de la  version de angular
-- Usa el mcp de context7 en caso de necesitar entender algunas funcionalidades de la  version de primeng
+- Usa el mcp de context7 en caso de necesitar entender algunas funcionalidades de la version de angular
+- Usa el mcp de context7 en caso de necesitar entender algunas funcionalidades de la version de primeng
