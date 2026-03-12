@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.3](https://github.com/tamerlantian/indio/compare/v0.0.2...v0.0.3) (2026-03-12)
+
+### Features
+
+- eliminar api key ([51ad37a](https://github.com/tamerlantian/indio/commit/51ad37ae58e01d1a7ec0ab4ce0a8219e16992aac))
+- implementar token refresh automático en 401 ([6fcfcbf](https://github.com/tamerlantian/indio/commit/6fcfcbf3c32660f72664c4f95491c1b695b997c3))
+- mostrar advertencia si el usuario no tiene tenant al crear API Key ([d2d09c2](https://github.com/tamerlantian/indio/commit/d2d09c21cf2360cb5a86673502c96016f84250ed))
+
+### Bug Fixes
+
+- eliminar toast duplicado en api-keys ([3f5571a](https://github.com/tamerlantian/indio/commit/3f5571ade7ef28fc1dff097ddd1a8ce719a109e8))
+
+### Refactoring
+
+- centralizar guards, constantes y manejo global de errores HTTP ([95a6e42](https://github.com/tamerlantian/indio/commit/95a6e4230757b2e1f9a406204813bfc0b35254cc))
+- reorganizar constantes core con estructura anidada y agregar servicios base ([f896703](https://github.com/tamerlantian/indio/commit/f8967038b1397384c51c845ffc8c9ecc47d8f8a2))
+
 ## [0.0.2](https://github.com/tamerlantian/indio/compare/v0.0.1...v0.0.2) (2026-03-11)
 
 ### Bug Fixes
