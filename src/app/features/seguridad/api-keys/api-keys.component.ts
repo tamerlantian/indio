@@ -5,7 +5,6 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -24,12 +23,11 @@ import { AuthService } from '../../auth/services/auth.service';
     TableModule,
     DialogModule,
     InputTextModule,
-    ToastModule,
     ConfirmDialogModule,
     TooltipModule,
     SkeletonModule,
   ],
-  providers: [MessageService, ConfirmationService],
+  providers: [ConfirmationService],
   templateUrl: './api-keys.component.html',
   styleUrl: './api-keys.component.scss',
 })
@@ -75,6 +73,18 @@ export class ApiKeysComponent implements OnInit {
 
   openCreateDialog(): void {
     const tenantId = this.authService.currentUser()?.tenant_id ?? null;
+
+    if (!tenantId) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Tenant requerido',
+        detail:
+          'Tu cuenta no tiene un tenant asignado. Contacta al administrador para poder crear API Keys.',
+        life: 6000,
+      });
+      return;
+    }
+
     this.createForm.reset({ tenant_id: tenantId });
     this.createDialogVisible.set(true);
   }
@@ -126,13 +136,6 @@ export class ApiKeysComponent implements OnInit {
           severity: 'success',
           summary: 'Eliminada',
           detail: 'La API Key fue eliminada.',
-        });
-      },
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'No se pudo eliminar la clave.',
         });
       },
     });

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { AuthResponse, LoginRequest, Usuario } from '../models/auth.model';
 import { environment } from '../../../../environments/environment';
+import { API_ENDPOINTS } from '../../../core/constants/api-endpoints.constants';
+import { ROUTE_PATHS } from '../../../core/constants/route-paths.constants';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -20,8 +22,8 @@ export class AuthService {
    */
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(`${environment.apiUrl}/auth/seguridad/login`, credentials, {
-        withCredentials: true, // permite que el navegador maneje las cookies
+      .post<AuthResponse>(`${environment.apiUrl}${API_ENDPOINTS.auth.login}`, credentials, {
+        withCredentials: true,
       })
       .pipe(
         tap((response) => {
@@ -36,7 +38,7 @@ export class AuthService {
    */
   me(): Observable<Usuario | null> {
     return this.http
-      .get<Usuario>(`${environment.apiUrl}/auth/seguridad/me`, {
+      .get<Usuario>(`${environment.apiUrl}${API_ENDPOINTS.auth.me}`, {
         withCredentials: true,
       })
       .pipe(
@@ -50,14 +52,33 @@ export class AuthService {
       );
   }
 
+  /**
+   * Renueva las cookies HTTP-only llamando al endpoint de refresh.
+   */
+  refresh(): Observable<void> {
+    return this.http.post<void>(
+      `${environment.apiUrl}${API_ENDPOINTS.auth.refresh}`,
+      {},
+      { withCredentials: true },
+    );
+  }
+
   logout(): void {
     this.http
-      .post(`${environment.apiUrl}/auth/seguridad/logout`, {}, { withCredentials: true })
+      .post(`${environment.apiUrl}${API_ENDPOINTS.auth.logout}`, {}, { withCredentials: true })
       .subscribe({ complete: () => this._clearSession() });
+  }
+
+  /**
+   * Limpia la sesión sin hacer HTTP call.
+   * Usado por el interceptor de errores cuando la sesión ya expiró (401).
+   */
+  forceLogout(): void {
+    this._clearSession();
   }
 
   private _clearSession(): void {
     this._currentUser.set(null);
-    this.router.navigate(['/auth/login']);
+    this.router.navigate([ROUTE_PATHS.auth.login]);
   }
 }

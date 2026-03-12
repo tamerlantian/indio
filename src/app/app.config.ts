@@ -65,8 +65,10 @@ const SemanticaPreset = definePreset(Aura, {
 });
 
 import { firstValueFrom } from 'rxjs';
+import { MessageService } from 'primeng/api';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { AuthService } from './features/auth/services/auth.service';
 
 export const appConfig: ApplicationConfig = {
@@ -74,7 +76,8 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
+    MessageService,
     provideAppInitializer(() => {
       const auth = inject(AuthService);
       return firstValueFrom(auth.me());
