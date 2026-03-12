@@ -138,13 +138,6 @@ export class ApiKeysComponent implements OnInit {
           detail: 'La API Key fue eliminada.',
         });
       },
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'No se pudo eliminar la clave.',
-        });
-      },
     });
   }
 

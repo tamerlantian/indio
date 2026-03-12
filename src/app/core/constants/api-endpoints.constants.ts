@@ -10,6 +10,6 @@ export const API_ENDPOINTS = {
   apiKey: {
     list: '/auth/api-key/lista',
     create: '/auth/api-key/nuevo',
-    byId: (id: number) => `/security/api-keys/${id}`,
+    byId: (id: number) => `/auth/api-key/eliminar/${id}`,
   },
 } as const;
