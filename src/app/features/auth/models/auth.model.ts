@@ -2,6 +2,7 @@ export interface LoginRequest {
   email: string;
   password: string;
   client_type: 'api' | 'web';
+  turnstile_token?: string;
 }
 
 /** Respuesta del backend; las cookies HTTP-only se setean automáticamente */
@@ -14,4 +15,9 @@ export interface Usuario {
   email: string;
   tenant_id?: number;
   role: string;
+}
+
+export interface ResendVerificationRequest {
+  email: string;
+  turnstile_token: string;
 }

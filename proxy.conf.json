@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://api.semanticaapi.com.co",
+    "target": "https://api.semanticaapi.uk",
     "secure": true,
     "changeOrigin": true,
     "pathRewrite": { "^/api": "" },

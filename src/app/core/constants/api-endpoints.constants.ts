@@ -1,4 +1,5 @@
 const AUTH = '/auth/seguridad';
+const USER = '/auth/user';
 
 export const API_ENDPOINTS = {
   auth: {
@@ -6,6 +7,10 @@ export const API_ENDPOINTS = {
     logout: `${AUTH}/logout`,
     refresh: `${AUTH}/refresh`,
     me: `${AUTH}/me`,
+    verifyEmail: `${USER}/verificar`,
+    resendVerification: `${USER}/reenviar-verificacion`,
+    forgotPassword: `${USER}/recuperar-clave`,
+    resetPassword: `${USER}/restablecer-clave`,
   },
   apiKey: {
     list: '/auth/api-key/lista',

@@ -1,16 +1,23 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, catchError, of, tap } from 'rxjs';
-import { AuthResponse, LoginRequest, Usuario } from '../models/auth.model';
+import {
+  AuthResponse,
+  LoginRequest,
+  ResendVerificationRequest,
+  Usuario,
+} from '../models/auth.model';
 import { environment } from '../../../../environments/environment';
 import { API_ENDPOINTS } from '../../../core/constants/api-endpoints.constants';
 import { ROUTE_PATHS } from '../../../core/constants/route-paths.constants';
+import { TokenRefreshService } from '../../../core/services/token-refresh.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
+  private readonly tokenRefresh = inject(TokenRefreshService);
 
   private readonly _currentUser = signal<Usuario | null>(null);
   readonly currentUser = this._currentUser.asReadonly();
@@ -70,6 +77,47 @@ export class AuthService {
   }
 
   /**
+   * Envía un correo de recuperación de contraseña al email indicado.
+   */
+  forgotPassword(email: string, captchaToken?: string): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.forgotPassword}`, {
+      email,
+      ...(captchaToken && { turnstile_token: captchaToken }),
+    });
+  }
+
+  /**
+   * Establece una nueva contraseña usando el token de recuperación.
+   */
+  resetPassword(token: string, password: string, captchaToken?: string): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.resetPassword}`, {
+      token,
+      nueva_clave: password,
+      ...(captchaToken && { turnstile_token: captchaToken }),
+    });
+  }
+
+  /**
+   * Reenvía el correo de verificación de cuenta.
+   */
+  resendVerification(data: ResendVerificationRequest): Observable<void> {
+    return this.http.post<void>(
+      `${environment.apiUrl}${API_ENDPOINTS.auth.resendVerification}`,
+      data,
+    );
+  }
+
+  /**
+   * Verifica la cuenta del usuario usando el token enviado por correo.
+   */
+  verifyEmail(token: string): Observable<void> {
+    const params = new HttpParams().set('token', token);
+    return this.http.get<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.verifyEmail}`, {
+      params,
+    });
+  }
+
+  /**
    * Limpia la sesión sin hacer HTTP call.
    * Usado por el interceptor de errores cuando la sesión ya expiró (401).
    */
@@ -79,6 +127,7 @@ export class AuthService {
 
   private _clearSession(): void {
     this._currentUser.set(null);
+    this.tokenRefresh.reset();
     this.router.navigate([ROUTE_PATHS.auth.login]);
   }
 }

@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.4](https://github.com/tamerlantian/indio/compare/v0.0.3...v0.0.4) (2026-03-27)
+
+### Features
+
+- **auth:** agregar flujo de recuperación y restablecimiento de contraseña ([b416953](https://github.com/tamerlantian/indio/commit/b41695341e3a08c8f8e1f1902d388c8dcd86fc3a))
+- **auth:** agregar flujo de verificación de correo electrónico ([07d222c](https://github.com/tamerlantian/indio/commit/07d222cbd7caf64a0751423da45380447d3ddfa2))
+- **auth:** integrar Turnstile en el formulario de login ([032f19b](https://github.com/tamerlantian/indio/commit/032f19bddbdce89803b676e8829a77a7234b67f3))
+- **shared:** agregar componente Turnstile de Cloudflare ([04eaa24](https://github.com/tamerlantian/indio/commit/04eaa244f6858f64e487c81506bb1fda80c8685d))
+- **shared:** agregar componentes reutilizables de UI ([1e7ebc1](https://github.com/tamerlantian/indio/commit/1e7ebc15f451a985d80cd6dfa3d98924cf1457a9))
+
+### Bug Fixes
+
+- agregar MessageService provider en app.spec.ts ([afe4d10](https://github.com/tamerlantian/indio/commit/afe4d10f2e74c7a9d23d6bb165f39fefef1063db))
+
+### Refactoring
+
+- **core:** extraer TokenRefreshService y error.utils del interceptor ([d0fb8f7](https://github.com/tamerlantian/indio/commit/d0fb8f700e0254b62def05b5abfe1b44a2b9b450))
+- **core:** separar handlers del interceptor de errores HTTP ([0314a53](https://github.com/tamerlantian/indio/commit/0314a539a5d310f88679df922a9afe7abcbd6eb8))
+
 ## [0.0.3](https://github.com/tamerlantian/indio/compare/v0.0.2...v0.0.3) (2026-03-12)
 
 ### Features
