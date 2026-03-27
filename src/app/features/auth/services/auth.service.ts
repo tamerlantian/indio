@@ -6,11 +6,13 @@ import { AuthResponse, LoginRequest, Usuario } from '../models/auth.model';
 import { environment } from '../../../../environments/environment';
 import { API_ENDPOINTS } from '../../../core/constants/api-endpoints.constants';
 import { ROUTE_PATHS } from '../../../core/constants/route-paths.constants';
+import { TokenRefreshService } from '../../../core/services/token-refresh.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
+  private readonly tokenRefresh = inject(TokenRefreshService);
 
   private readonly _currentUser = signal<Usuario | null>(null);
   readonly currentUser = this._currentUser.asReadonly();
@@ -79,6 +81,7 @@ export class AuthService {
 
   private _clearSession(): void {
     this._currentUser.set(null);
+    this.tokenRefresh.reset();
     this.router.navigate([ROUTE_PATHS.auth.login]);
   }
 }
