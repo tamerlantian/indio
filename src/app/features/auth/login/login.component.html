@@ -96,13 +96,19 @@
           }
         </div>
 
+        <app-turnstile
+          (verified)="captchaToken.set($event)"
+          (expired)="captchaToken.set(null)"
+          (errored)="captchaToken.set(null)"
+        />
+
         <p-button
           type="submit"
           label="Ingresar"
           fluid
           styleClass="login-btn"
           [loading]="isLoading()"
-          [disabled]="isLoading()"
+          [disabled]="isLoading() || !captchaToken()"
         />
       </form>
     </div>

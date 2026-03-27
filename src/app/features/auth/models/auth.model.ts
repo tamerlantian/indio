@@ -2,6 +2,7 @@ export interface LoginRequest {
   email: string;
   password: string;
   client_type: 'api' | 'web';
+  turnstile_token?: string;
 }
 
 /** Respuesta del backend; las cookies HTTP-only se setean automáticamente */
