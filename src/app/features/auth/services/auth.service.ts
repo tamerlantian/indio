@@ -77,6 +77,27 @@ export class AuthService {
   }
 
   /**
+   * Envía un correo de recuperación de contraseña al email indicado.
+   */
+  forgotPassword(email: string, captchaToken?: string): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.forgotPassword}`, {
+      email,
+      ...(captchaToken && { turnstile_token: captchaToken }),
+    });
+  }
+
+  /**
+   * Establece una nueva contraseña usando el token de recuperación.
+   */
+  resetPassword(token: string, password: string, captchaToken?: string): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.resetPassword}`, {
+      token,
+      nueva_clave: password,
+      ...(captchaToken && { turnstile_token: captchaToken }),
+    });
+  }
+
+  /**
    * Reenvía el correo de verificación de cuenta.
    */
   resendVerification(data: ResendVerificationRequest): Observable<void> {

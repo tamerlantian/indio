@@ -9,6 +9,8 @@ export const API_ENDPOINTS = {
     me: `${AUTH}/me`,
     verifyEmail: `${USER}/verificar`,
     resendVerification: `${USER}/reenviar-verificacion`,
+    forgotPassword: `${USER}/recuperar-clave`,
+    resetPassword: `${USER}/restablecer-clave`,
   },
   apiKey: {
     list: '/auth/api-key/lista',

@@ -8,6 +8,18 @@ export const AUTH_ROUTES: Routes = [
     loadComponent: () => import('./login/login.component').then((m) => m.LoginComponent),
   },
   {
+    path: 'forgot-password',
+    canActivate: [publicGuard],
+    loadComponent: () =>
+      import('./forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent),
+  },
+  {
+    path: 'restablecer-clave',
+    canActivate: [publicGuard],
+    loadComponent: () =>
+      import('./reset-password/reset-password.component').then((m) => m.ResetPasswordComponent),
+  },
+  {
     path: 'verify-email',
     canActivate: [publicGuard],
     loadComponent: () =>
