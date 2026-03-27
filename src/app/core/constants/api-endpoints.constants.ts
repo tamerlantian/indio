@@ -17,4 +17,9 @@ export const API_ENDPOINTS = {
     create: '/auth/api-key/nuevo',
     byId: (id: number) => `/auth/api-key/eliminar/${id}`,
   },
+  formato: {
+    list: '/gen/formato/lista',
+    byId: (id: number) => `/gen/formato/${id}`,
+    updateContenido: (id: number) => `/gen/formato/${id}/contenido`,
+  },
 } as const;

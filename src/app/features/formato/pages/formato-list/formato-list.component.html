@@ -1,0 +1,64 @@
+<div class="page-container">
+  <app-page-header
+    title="Formatos"
+    subtitle="Gestiona los formatos del sistema"
+    icon="pi pi-file"
+  />
+
+  @if (loading() && formatos().length === 0) {
+    <app-loading-spinner message="Cargando formatos..." />
+  } @else if (!loading() && formatos().length === 0) {
+    <app-empty-state
+      title="Sin formatos"
+      message="No se encontraron formatos registrados."
+      icon="pi pi-file"
+    />
+  } @else {
+    <div class="table-card">
+      <p-table
+        [value]="formatos()"
+        [lazy]="true"
+        [lazyLoadOnInit]="false"
+        [paginator]="true"
+        [rows]="rows()"
+        [totalRecords]="totalRecords()"
+        [loading]="loading()"
+        [rowHover]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        (onLazyLoad)="onLazyLoad($event)"
+        [scrollable]="true"
+        scrollHeight="600px"
+      >
+        <ng-template #header>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th class="col-actions">Acciones</th>
+          </tr>
+        </ng-template>
+
+        <ng-template #body let-formato>
+          <tr>
+            <td>
+              <code class="formato-code">{{ formato.codigo_formato_pk }}</code>
+            </td>
+            <td>
+              <span class="formato-name">{{ formato.nombre }}</span>
+            </td>
+            <td class="col-actions">
+              <p-button
+                icon="pi pi-pencil"
+                severity="secondary"
+                [text]="true"
+                [rounded]="true"
+                pTooltip="Editar formato"
+                tooltipPosition="top"
+                (click)="editFormato(formato.codigo_formato_pk)"
+              />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  }
+</div>
