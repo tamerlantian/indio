@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.5](https://github.com/tamerlantian/indio/compare/v0.0.4...v0.0.5) (2026-03-27)
+
+### Features
+
+- **formato:** agregar módulo de gestión de formatos ([06c925f](https://github.com/tamerlantian/indio/commit/06c925f9abf00e51a6d42ae427076cd082e803ec))
+
+### Refactoring
+
+- **dashboard:** reorganizar rutas bajo el shell y simplificar api-keys ([9a468e0](https://github.com/tamerlantian/indio/commit/9a468e0c49c4d04314b9885a0e658f9083190ee4))
+- **shared:** mejorar page-header, empty-state y estilos globales ([0033cce](https://github.com/tamerlantian/indio/commit/0033cce9e1b28c68a07c2aa5b7789a00cb2b7a4f))
+
 ## [0.0.4](https://github.com/tamerlantian/indio/compare/v0.0.3...v0.0.4) (2026-03-27)
 
 ### Features
