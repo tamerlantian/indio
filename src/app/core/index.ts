@@ -9,4 +9,5 @@ export { API_ENDPOINTS } from './constants/api-endpoints.constants';
 export { ROUTE_PATHS } from './constants/route-paths.constants';
 export { isSafeReturnUrl } from './utils/url.utils';
 export { TokenRefreshService } from './services/token-refresh.service';
-export { extractErrorMessage } from './utils/error.utils';
+export { extractErrorMessage, parseApiError } from './utils/error.utils';
+export type { ApiError, ApiErrorResponse } from './utils/error.utils';

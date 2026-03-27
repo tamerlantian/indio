@@ -38,13 +38,18 @@ export class ShellComponent {
   readonly drawerVisible = signal(false);
 
   /** Conjuntos de labels de grupos actualmente expandidos */
-  readonly expandedGroups = signal<Set<string>>(new Set(['Seguridad']));
+  readonly expandedGroups = signal<Set<string>>(new Set(['Seguridad', 'Configuración']));
 
   readonly navItems: NavItem[] = [
     {
       label: 'Seguridad',
       icon: 'pi pi-shield',
-      children: [{ label: 'API Keys', icon: 'pi pi-key', route: '/seguridad/api-keys' }],
+      children: [{ label: 'API Keys', icon: 'pi pi-key', route: '/dashboard/seguridad/api-keys' }],
+    },
+    {
+      label: 'Configuración',
+      icon: 'pi pi-cog',
+      children: [{ label: 'Formatos', icon: 'pi pi-file', route: '/dashboard/formato/lista' }],
     },
   ];
 
