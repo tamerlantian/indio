@@ -1,8 +1,13 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, catchError, of, tap } from 'rxjs';
-import { AuthResponse, LoginRequest, Usuario } from '../models/auth.model';
+import {
+  AuthResponse,
+  LoginRequest,
+  ResendVerificationRequest,
+  Usuario,
+} from '../models/auth.model';
 import { environment } from '../../../../environments/environment';
 import { API_ENDPOINTS } from '../../../core/constants/api-endpoints.constants';
 import { ROUTE_PATHS } from '../../../core/constants/route-paths.constants';
@@ -69,6 +74,26 @@ export class AuthService {
     this.http
       .post(`${environment.apiUrl}${API_ENDPOINTS.auth.logout}`, {}, { withCredentials: true })
       .subscribe({ complete: () => this._clearSession() });
+  }
+
+  /**
+   * Reenvía el correo de verificación de cuenta.
+   */
+  resendVerification(data: ResendVerificationRequest): Observable<void> {
+    return this.http.post<void>(
+      `${environment.apiUrl}${API_ENDPOINTS.auth.resendVerification}`,
+      data,
+    );
+  }
+
+  /**
+   * Verifica la cuenta del usuario usando el token enviado por correo.
+   */
+  verifyEmail(token: string): Observable<void> {
+    const params = new HttpParams().set('token', token);
+    return this.http.get<void>(`${environment.apiUrl}${API_ENDPOINTS.auth.verifyEmail}`, {
+      params,
+    });
   }
 
   /**

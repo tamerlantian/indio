@@ -7,6 +7,7 @@ import { PasswordModule } from 'primeng/password';
 import { MessageModule } from 'primeng/message';
 import { AuthService } from '../services/auth.service';
 import { isSafeReturnUrl } from '../../../core/utils/url.utils';
+import { extractErrorMessage } from '../../../core/utils/error.utils';
 import { ROUTE_PATHS } from '../../../core/constants/route-paths.constants';
 import { TurnstileComponent } from '../../../shared/components/turnstile/turnstile.component';
 
@@ -67,10 +68,18 @@ export class LoginComponent {
           this.router.navigateByUrl(returnUrl);
         },
         error: (err) => {
-          this.errorMessage.set(err?.error?.message ?? 'Credenciales inválidas.');
-          this.isLoading.set(false);
           this.turnstile()?.reset();
           this.captchaToken.set(null);
+
+          if (err.error?.error?.is_verified === false) {
+            this.router.navigate([ROUTE_PATHS.auth.resendVerification], {
+              queryParams: { email: this.form.getRawValue().email },
+            });
+            return;
+          }
+
+          this.errorMessage.set(extractErrorMessage(err, 'Credenciales inválidas.'));
+          this.isLoading.set(false);
         },
       });
   }

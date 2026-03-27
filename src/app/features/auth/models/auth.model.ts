@@ -16,3 +16,8 @@ export interface Usuario {
   tenant_id?: number;
   role: string;
 }
+
+export interface ResendVerificationRequest {
+  email: string;
+  turnstile_token: string;
+}
