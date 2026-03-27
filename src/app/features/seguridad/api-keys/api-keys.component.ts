@@ -12,6 +12,7 @@ import { PageHeaderComponent, LoadingSpinnerComponent, EmptyStateComponent } fro
 import { ApiKeyService } from '../services/api-key.service';
 import { ApiKey } from '../models/api-key.model';
 import { AuthService } from '../../auth/services/auth.service';
+import { extractErrorMessage } from '../../../core/utils/error.utils';
 
 @Component({
   selector: 'app-api-keys',
@@ -62,12 +63,12 @@ export class ApiKeysComponent implements OnInit {
     this.loading.set(true);
     this.apiKeyService.getApiKeys().subscribe({
       next: () => this.loading.set(false),
-      error: () => {
+      error: (err: unknown) => {
         this.loading.set(false);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'No se pudieron cargar las API Keys.',
+          detail: extractErrorMessage(err, 'No se pudieron cargar las API Keys.'),
         });
       },
     });
@@ -113,7 +114,7 @@ export class ApiKeysComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: err?.error?.message ?? 'No se pudo crear la API Key.',
+          detail: extractErrorMessage(err, 'No se pudo crear la API Key.'),
         });
       },
     });
