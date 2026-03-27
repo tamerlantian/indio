@@ -1,55 +1,3 @@
-:host {
-  display: block;
-}
-
-.apikeys-page {
-  padding: 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-// ─── Cabecera ───────────────────────────────────────────────────────────────
-
-.page-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-  }
-}
-
-.page-header__info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.page-title {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: var(--p-text-color);
-  margin: 0;
-  letter-spacing: -0.4px;
-}
-
-.page-title__icon {
-  font-size: 1.25rem;
-  color: var(--p-primary-color);
-}
-
-.page-subtitle {
-  font-size: 0.875rem;
-  color: var(--p-text-muted-color);
-  margin: 0;
-}
-
 // ─── Banner informativo ──────────────────────────────────────────────────────
 
 .info-banner {
@@ -77,114 +25,11 @@
   line-height: 1.5;
 }
 
-// ─── Skeleton ────────────────────────────────────────────────────────────────
-
-.skeleton-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  background: var(--p-surface-0);
-  border: 1px solid var(--p-surface-200);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.skeleton-row {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--p-surface-100);
-
-  &:last-child {
-    border-bottom: none;
-  }
-}
-
-// ─── Estado vacío ────────────────────────────────────────────────────────────
-
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.875rem;
-  padding: 4rem 2rem;
-  background: var(--p-surface-0);
-  border: 1px dashed var(--p-surface-200);
-  border-radius: 12px;
-  text-align: center;
-}
-
-.empty-state__icon-wrap {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--p-primary-color) 10%, transparent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.empty-state__icon {
-  font-size: 1.75rem;
-  color: var(--p-primary-color);
-}
-
-.empty-state__title {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--p-text-color);
-  margin: 0;
-}
-
-.empty-state__desc {
-  font-size: 0.875rem;
-  color: var(--p-text-muted-color);
-  margin: 0;
-  max-width: 380px;
-  line-height: 1.5;
-}
-
 // ─── Tabla ───────────────────────────────────────────────────────────────────
-
-.table-card {
-  background: var(--p-surface-0);
-  border: 1px solid var(--p-surface-200);
-  border-radius: 12px;
-  overflow: hidden;
-
-  :global(.apikeys-table) {
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  :global(.p-datatable-thead > tr > th) {
-    background: var(--p-surface-50);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--p-text-muted-color);
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--p-surface-200);
-  }
-
-  :global(.p-datatable-tbody > tr > td) {
-    padding: 0.875rem 1rem;
-    border-bottom: 1px solid var(--p-surface-100);
-    font-size: 0.875rem;
-    vertical-align: middle;
-  }
-
-  :global(.p-datatable-tbody > tr:last-child > td) {
-    border-bottom: none;
-  }
-}
 
 .col-actions {
   width: 80px;
-  text-align: center !important;
+  text-align: center;
 }
 
 .key-name {
@@ -192,38 +37,14 @@
   color: var(--p-text-color);
 }
 
-.service-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.625rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  background: var(--p-surface-100);
-  color: var(--p-text-muted-color);
-  white-space: nowrap;
-}
-
-.key-preview-cell {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .key-preview {
-  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-family: 'Geist Mono', monospace;
   font-size: 0.8125rem;
   color: var(--p-text-color);
   background: var(--p-surface-100);
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
   letter-spacing: 0.5px;
-}
-
-.status-cell {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
 }
 
 .date-text {
@@ -233,38 +54,6 @@
   &--muted {
     font-style: italic;
     opacity: 0.6;
-  }
-}
-
-// ─── Botones de ícono ─────────────────────────────────────────────────────────
-
-.icon-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: transparent;
-  border-radius: 8px;
-  cursor: pointer;
-  color: var(--p-text-muted-color);
-  transition:
-    background 0.15s ease,
-    color 0.15s ease;
-
-  i {
-    font-size: 0.9375rem;
-  }
-
-  &:hover {
-    background: var(--p-surface-100);
-    color: var(--p-text-color);
-  }
-
-  &--danger:hover {
-    background: color-mix(in srgb, var(--p-red-500) 12%, transparent);
-    color: var(--p-red-500);
   }
 }
 
@@ -343,7 +132,7 @@
 
 .key-reveal-code {
   flex: 1;
-  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-family: 'Geist Mono', monospace;
   font-size: 0.8125rem;
   color: var(--p-text-color);
   word-break: break-all;

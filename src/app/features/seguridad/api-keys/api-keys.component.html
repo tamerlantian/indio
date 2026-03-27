@@ -1,15 +1,11 @@
-<div class="apikeys-page">
-  <!-- Cabecera -->
-  <div class="page-header">
-    <div class="page-header__info">
-      <h1 class="page-title">
-        <i class="pi pi-key page-title__icon"></i>
-        API Keys
-      </h1>
-      <p class="page-subtitle">Gestiona las claves de acceso para integraciones externas</p>
-    </div>
+<div class="page-container">
+  <app-page-header
+    title="API Keys"
+    subtitle="Gestiona las claves de acceso para integraciones externas"
+    icon="pi pi-key"
+  >
     <p-button label="Nueva clave" icon="pi pi-plus" (onClick)="openCreateDialog()" />
-  </div>
+  </app-page-header>
 
   <!-- Banner informativo -->
   <div class="info-banner">
@@ -20,46 +16,25 @@
     </p>
   </div>
 
-  <!-- Estado de carga -->
-  @if (loading()) {
-    <div class="skeleton-list">
-      @for (i of [1, 2, 3]; track i) {
-        <div class="skeleton-row">
-          <p-skeleton width="200px" height="1rem" />
-          <p-skeleton width="100px" height="1rem" />
-          <p-skeleton width="220px" height="1rem" />
-          <p-skeleton width="80px" height="1.5rem" borderRadius="20px" />
-          <p-skeleton width="120px" height="1rem" />
-          <p-skeleton width="80px" height="2rem" borderRadius="8px" />
-        </div>
-      }
-    </div>
-  }
-
-  <!-- Estado vacío -->
-  @if (!loading() && apiKeys().length === 0) {
-    <div class="empty-state">
-      <div class="empty-state__icon-wrap">
-        <i class="pi pi-key empty-state__icon"></i>
-      </div>
-      <h2 class="empty-state__title">Sin API Keys</h2>
-      <p class="empty-state__desc">
-        Aún no has creado ninguna clave. Crea una para comenzar a integrar servicios externos.
-      </p>
+  @if (loading() && apiKeys().length === 0) {
+    <app-loading-spinner message="Cargando API Keys..." />
+  } @else if (!loading() && apiKeys().length === 0) {
+    <app-empty-state
+      title="Sin API Keys"
+      message="Aún no has creado ninguna clave. Crea una para comenzar a integrar servicios externos."
+      icon="pi pi-key"
+    >
       <p-button
         label="Crear primera clave"
         icon="pi pi-plus"
         [outlined]="true"
         (onClick)="openCreateDialog()"
       />
-    </div>
-  }
-
-  <!-- Tabla de claves -->
-  @if (!loading() && apiKeys().length > 0) {
+    </app-empty-state>
+  } @else {
     <div class="table-card">
-      <p-table [value]="apiKeys()" [rowHover]="true" styleClass="apikeys-table">
-        <ng-template pTemplate="header">
+      <p-table [value]="apiKeys()" [rowHover]="true">
+        <ng-template #header>
           <tr>
             <th>Nombre</th>
             <th>Prefix</th>
@@ -70,14 +45,11 @@
           </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-key>
+        <ng-template #body let-key>
           <tr>
-            <!-- Nombre -->
             <td>
               <span class="key-name">{{ key.name }}</span>
             </td>
-
-            <!-- Prefix -->
             <td>
               @if (key.prefix) {
                 <code class="key-preview">{{ key.prefix }}</code>
@@ -85,13 +57,9 @@
                 <span class="date-text date-text--muted">—</span>
               }
             </td>
-
-            <!-- Creada -->
             <td>
               <span class="date-text">{{ key.created_at | date: 'dd/MM/yyyy' }}</span>
             </td>
-
-            <!-- Expira -->
             <td>
               @if (key.expires_at) {
                 <span class="date-text">{{ key.expires_at | date: 'dd/MM/yyyy' }}</span>
@@ -99,8 +67,6 @@
                 <span class="date-text date-text--muted">Nunca</span>
               }
             </td>
-
-            <!-- Último uso -->
             <td>
               @if (key.last_used_at) {
                 <span class="date-text">{{ key.last_used_at | date: 'dd/MM/yyyy' }}</span>
@@ -108,18 +74,16 @@
                 <span class="date-text date-text--muted">Nunca</span>
               }
             </td>
-
-            <!-- Acciones -->
             <td class="col-actions">
-              <button
-                class="icon-btn icon-btn--danger"
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                [text]="true"
+                [rounded]="true"
                 pTooltip="Eliminar clave"
                 tooltipPosition="top"
                 (click)="confirmDelete(key)"
-                aria-label="Eliminar clave"
-              >
-                <i class="pi pi-trash"></i>
-              </button>
+              />
             </td>
           </tr>
         </ng-template>

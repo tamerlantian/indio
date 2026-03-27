@@ -7,8 +7,8 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
-import { SkeletonModule } from 'primeng/skeleton';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { PageHeaderComponent, LoadingSpinnerComponent, EmptyStateComponent } from '../../../shared';
 import { ApiKeyService } from '../services/api-key.service';
 import { ApiKey } from '../models/api-key.model';
 import { AuthService } from '../../auth/services/auth.service';
@@ -19,13 +19,15 @@ import { AuthService } from '../../auth/services/auth.service';
   imports: [
     ReactiveFormsModule,
     DatePipe,
+    PageHeaderComponent,
+    LoadingSpinnerComponent,
+    EmptyStateComponent,
     ButtonModule,
     TableModule,
     DialogModule,
     InputTextModule,
     ConfirmDialogModule,
     TooltipModule,
-    SkeletonModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './api-keys.component.html',
