@@ -7,6 +7,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { MessageService } from 'primeng/api';
 import { FormatoService } from '../../services/formato.service';
 import { Formato } from '../../models/formato.model';
+import { extractErrorMessage } from '../../../../core/utils/error.utils';
 
 @Component({
   selector: 'app-formato-edit',
@@ -35,12 +36,12 @@ export class FormatoEditComponent implements OnInit {
         this.contenido = formato.contenido_externo;
         this.loading.set(false);
       },
-      error: () => {
+      error: (err: unknown) => {
         this.loading.set(false);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'No se pudo cargar el formato.',
+          detail: extractErrorMessage(err, 'No se pudo cargar el formato.'),
         });
         this.router.navigate(['/dashboard/formato/lista']);
       },
@@ -62,12 +63,12 @@ export class FormatoEditComponent implements OnInit {
         });
         this.router.navigate(['/dashboard/formato/lista']);
       },
-      error: () => {
+      error: (err: unknown) => {
         this.saving.set(false);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'No se pudo guardar el contenido.',
+          detail: extractErrorMessage(err, 'No se pudo guardar el contenido.'),
         });
       },
     });

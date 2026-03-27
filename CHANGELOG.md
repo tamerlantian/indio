@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.6](https://github.com/tamerlantian/indio/compare/v0.0.5...v0.0.6) (2026-03-27)
+
+### Features
+
+- crear extractor de mensajes de error ([a3844b1](https://github.com/tamerlantian/indio/commit/a3844b1a64824868ee3f870198c0250106bc7a29))
+
 ## [0.0.5](https://github.com/tamerlantian/indio/compare/v0.0.4...v0.0.5) (2026-03-27)
 
 ### Features

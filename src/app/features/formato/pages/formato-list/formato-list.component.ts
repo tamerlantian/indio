@@ -10,6 +10,7 @@ import {
   EmptyStateComponent,
 } from '../../../../shared';
 import { FormatoService } from '../../services/formato.service';
+import { extractErrorMessage } from '../../../../core/utils/error.utils';
 
 @Component({
   selector: 'app-formato-list',
@@ -54,12 +55,12 @@ export class FormatoListComponent implements OnInit {
     this.loading.set(true);
     this.formatoService.getFormatos(page, size).subscribe({
       next: () => this.loading.set(false),
-      error: () => {
+      error: (err: unknown) => {
         this.loading.set(false);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'No se pudieron cargar los formatos.',
+          detail: extractErrorMessage(err, 'No se pudieron cargar los formatos.'),
         });
       },
     });
